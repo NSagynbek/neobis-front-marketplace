@@ -3,6 +3,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import photoBackground from "../assets/PhotoBackground.png"
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import { IconButton, InputAdornment } from '@mui/material';
 import { useState } from "react";
 import {Formik,Form,Field,ErrorMessage} from "formik"
@@ -13,17 +14,17 @@ import TextError from "./TextError";
 
 const initialValues ={
     username:"",
-    password:"",
+    email:"",
 }
 
 const validationSchema = yup.object({
     username: yup.string().required("пожалуйста, введите имя пользователя"),
-    password: yup.string().required("пожалуйста, введите ваш пароль")
+    email: yup.string().email("Неверный формат").required("пожалуйста, введите вашу почту")
 })
 
 
 const notify = ()=>{
-    toast.error('Неверный логин или пароль!', {
+    toast.error('Данный пользователь уже зарегистрирован!', {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -36,7 +37,7 @@ const notify = ()=>{
   }
 
 
-function Login (){
+function Signup (){
     const [iconToggle,setIconToggle] = useState(false)
 
 
@@ -61,6 +62,22 @@ function Login (){
 
             <div className="formik">
 
+            <div className='formik__header'>
+
+                <label htmlFor="backBtn" className='backBtn-label'>
+                    <NavLink id='backBtn' className="backBtn-text" name="backBtn" to="/">Назад</NavLink>
+
+                    <NavLink to="/"  id='backBtn' className="backBtn-Icon">
+                      <IconButton edge="start" >
+                        <KeyboardBackspaceIcon/>
+                      </IconButton>
+                  </NavLink>
+               </label>
+
+            <p className='formik__header__text'>Регистрация</p>
+
+            </div>
+
             <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}
@@ -84,11 +101,11 @@ function Login (){
                     <Field
                     type={iconToggle?"text":"password"}
                     id="password"
-                    name="password"
-                    placeholder = "Пароль"
+                    name="email"
+                    placeholder = "Почта"
                     className={iconToggle?"error":""}
                     />
-                     <ErrorMessage name="password" component={TextError}/>
+                     <ErrorMessage name="email" component={TextError}/>
                     <InputAdornment position="end" className="mu-icon">
                         <IconButton onClick={passwordVisibility} edge="end">
                             {iconToggle?(
@@ -107,17 +124,17 @@ function Login (){
                      disabled={!formikProps.dirty&&!formikProps.isValid}
                     
                      >
-                    Войти</button>
+                    Далее</button>
 
                 </Form>
                 )}
             </Formik>
             
-            <NavLink className="signUp-link" to="/signup">Зарегистрироваться</NavLink>
+           
             </div>
             <ToastContainer/>
         </div>
     )
 }
 
-export default Login
+export default Signup
