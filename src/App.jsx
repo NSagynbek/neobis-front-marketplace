@@ -5,8 +5,10 @@ import { useEffect } from 'react';
 
 import Login from "./components/Login"
 import Signup from "./components/Signup";
+import Password from "./components/Password";
 import RootLayout from "./layouts/RootLayout"
 import {PrivateRoutes} from "./components/utils/PrivateRoutes"
+
 
 
 
@@ -32,6 +34,7 @@ function App() {
       </Route>
        <Route path="/" element={<Login />} />
        <Route path="/signup" element={<Signup/>} />
+       <Route path="/password" element={<Password/>} />
       
 
         </Route>
