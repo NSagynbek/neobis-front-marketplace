@@ -205,8 +205,8 @@ top: 15px;
   display: flex;
   justify-content: space-around;
   align-items: center;
-  width: 100%;
-  top: 0;
+  width: 900px;
+  top: 10px;
 }
 
 
@@ -275,3 +275,374 @@ top: 15px;
   letter-spacing: 0.5px;
   margin-top: 1px;
 }
+
+.profile-container{
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.profile-details{
+  display: flex;
+  flex-direction: column;
+  width: 540px;
+  height: 100vh;
+  padding-left: 20px;
+  padding-top: 20px;
+}
+
+.user-info-container{
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.liked-products{
+  display: flex;
+  width: 100%;
+  align-items: center;
+  margin: 50px 0 5px;
+  position: relative;
+  height: 50px;
+}
+
+.profile-texts{
+  font-size: 16px;
+  font-weight:400px ;
+  color: #494949;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.profile-icons{
+  position: absolute;
+  right: 50px;
+}
+#first-icon{
+  right:40px ;
+}
+.products{
+  display: flex;
+  width: 100%;
+  align-items: center;
+  margin: 5px 0 5px;
+  position: relative;
+  height: 50px;
+}
+
+.profile-exit{
+  display: flex;
+  width: 100%;
+  align-items: center;
+  margin: 5px 0 5px;
+  position: relative;
+  height: 50px;
+
+}
+
+
+.profile-exit__btn{
+  text-decoration: none;
+  font-size: 16px;
+  font-weight:400px ;
+  color: #494949;
+  margin-left: 10px;
+}
+
+.profile-form-container{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100vh;
+  background: #eaeded;
+  align-items: center;
+}
+
+.avatar{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 200px;
+  margin-bottom: 50px;
+}
+
+.avatar__upload-btn{
+  font-weight: 400px;
+  font-size: 16px;
+  color: #5458EA;
+  outline: none;
+  border: none;
+  cursor: pointer;
+}
+
+.profile-form{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 652px;
+}
+
+.profile-form-form{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  gap: 20px;
+}
+
+#name,#lastname,
+#birthDate,#mobile,#email{
+  width: 100%;
+  height: 50px;
+  outline: none;
+  border: none;
+  font-weight: 400px;
+  font-size: 16px;
+  color: #C0C0C0;
+  border-bottom: 1px solid  #C0C0C0;
+  padding: 15px;
+}
+
+#birthDate,#email{
+  border: none;
+}
+
+.field-section-one{
+  display: flex;
+  flex-direction: column;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.user-info__name,
+.user-info__username{
+  font-weight: 400px;
+  font-size: 18px;
+  color: #494949;
+}
+
+.mobile{
+  display: flex;
+  align-items: center;
+  background-color: #ffffff;
+  padding: 15px;
+  width: 100%;
+  justify-content: space-between;
+  height: 50px;
+}
+
+.mobile__btn{
+  border: none;
+  outline: none;
+  font-weight: 400px;
+  font-size: 16px;
+  color: #5458EA;
+  background: #ffffff;
+  cursor: pointer;
+}
+
+.mobile__text{
+  font-weight: 400px;
+  font-size: 16px;
+  color: #C0C0C0;
+}
+
+.profile-header-text{
+  font-weight: 700px;
+  font-size: 18px;
+  color: #494949;
+  margin-right: 36%;
+  
+}
+
+.mobile-modal-overlay{
+  width: 100%;
+  height: 100vh;
+  background-color:#13131366;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.mobile-modal{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 565px;
+  height: 514;
+  border-radius: 40px;
+  padding: 44px 16px 44px 16px;
+  background: #FFFFFF;
+}
+
+.mobile-modal__heading{
+  font-size: 24px;
+  font-weight: 700px;
+  color: #494949;
+}
+
+.mobile-modal__content{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.mobile-modal__title{
+  font-weight: 400px;
+  font-size: 20px;
+  color: #494949;
+}
+
+.mobile-modal__text{
+  font-weight: 400px;
+  font-size: 16px;
+  color: #C0C0C0;
+}
+
+.mobile-form{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+#number{
+  width: 306px;
+  height: 61px;
+  font-weight: 700px;
+  font-size: 28px;
+  outline: none;
+  border: none;
+  text-align: center;
+}
+
+.mobile-form-submit-btn{
+  border: none;
+  outline: none;
+  width: 335px;
+  height: 65px;
+  font-size: 16px;
+  font-weight: 700px;
+  border-radius: 16px;
+  background: #F7F7F8;
+  color: #9CA4AB;
+  cursor: pointer;
+}
+
+.mobile-form-submit-btn-active{
+  border: none;
+  outline: none;
+  width: 335px;
+  height: 65px;
+  font-size: 16px;
+  font-weight: 700px;
+  border-radius: 16px;
+  background: #5458EA;
+  color: #FFFFFF;
+  cursor: pointer;
+}
+
+.code-modal{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width:565px ;
+  height:407px ;
+  border-radius: 40px;
+  padding: 44px 16px 44px 16px;
+  background: #FFFFFF;
+  gap: 20px;
+}
+
+.code-modal__heading{
+  font-size: 24px;
+  font-weight: 700px;
+  color: #494949;
+}
+
+.code-modal__title{
+  font-weight: 400px;
+  font-size: 20px;
+  color: #494949;
+}
+
+.code-modal__input{
+  border: none;
+  outline: none;
+  width: 120px;
+  height: 34px;
+  text-align: center;
+  font-weight: 700px;
+  font-size: 28px;
+  letter-spacing: 0.36px;
+  color: #494949;
+}
+
+.send-again-container-btn{
+  border: none;
+  outline: none;
+  height: 15px;
+  font-size: 16px;
+  font-weight: 400px;
+  color: #C0C0C0;
+  cursor: pointer;
+  background: #ffffff;
+}
+
+.send-again-container-btn-active{
+  border: none;
+  outline: none;
+  height: 15px;
+  font-size: 16px;
+  font-weight: 400px;
+  color: #5458EA;
+  cursor: pointer;
+  background: #ffffff
+}
+
+.code-form{
+ display: flex;
+ flex-direction: column;
+ justify-content: center;
+ align-items: center;
+}
+
+.send-again-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+
+.loader{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 60px;
+}
+
+.seconds{
+  font-weight: 400px;
+  font-size: 16px;
+  color: #494949;
+}
+
+
+
+

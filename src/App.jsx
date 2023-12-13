@@ -6,8 +6,14 @@ import { useEffect } from 'react';
 import Login from "./components/Login"
 import Signup from "./components/Signup";
 import Password from "./components/Password";
+import Profile from "./components/Profile";
+import Mobilemodal from "./modalWindows/Mobilemodal";
+import Codemodal from "./modalWindows/Codemodal";
 import RootLayout from "./layouts/RootLayout"
 import {PrivateRoutes} from "./components/utils/PrivateRoutes"
+
+
+
 
 
 
@@ -35,6 +41,9 @@ function App() {
        <Route path="/" element={<Login />} />
        <Route path="/signup" element={<Signup/>} />
        <Route path="/password" element={<Password/>} />
+       <Route path="/profile" element={<Profile/>} />
+       <Route path="/phone" element={<Mobilemodal/>} />
+       <Route path="/code" element={<Codemodal/>} />
       
 
         </Route>
