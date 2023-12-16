@@ -1,3 +1,5 @@
+import { loginSuccess } from '../redux';
+import {useDispatch} from "react-redux"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import photoBackground from "../assets/PhotoBackground.png"
@@ -8,8 +10,10 @@ import { useState } from "react";
 import {Formik,Form,Field,ErrorMessage} from "formik"
 import * as yup from "yup"
 import {NavLink} from "react-router-dom"
+import { login,setAuthToken } from '../api';
 
 import TextError from "./TextError";
+import axios from 'axios';
 
 const initialValues ={
     username:"",
@@ -37,14 +41,25 @@ const notify = ()=>{
 
 
 function Login (){
-    const [iconToggle,setIconToggle] = useState(false)
+    const dispatch = useDispatch();
+    const [iconToggle,setIconToggle] = useState(false);
 
 
-    function onSubmit (values){
+const  onSubmit = async (values)=>{
         console.log(values)
         notify()
+        try{
+            const response = await login(values)
+            const token = response.token;
+            setAuthToken(token)
+            dispatch(loginSuccess())
+            console.log(response)
 
-    }
+        } catch(error){
+            console.log(error)
+        }
+        
+}
 
     function passwordVisibility(){
         setIconToggle(!iconToggle);

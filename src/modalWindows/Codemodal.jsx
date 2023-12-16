@@ -16,7 +16,7 @@ const initialValues ={
     code:"",
 }
 
-function Codemodal(){
+function Codemodal({closeModalCode}){
 
     const [completed,setCompleted] =useState(false);
     const [seconds,setSeconds]=useState(60);
@@ -42,7 +42,7 @@ function Codemodal(){
     
     if (code.length === 4) {
         console.log("Sending API request with code:", code);
-        
+        closeModalCode() // i can call this function upon successful response from the server 
       }
    
   }, 1000);
@@ -50,15 +50,15 @@ function Codemodal(){
   const handleCodeChange = (event) => {
     const { value } = event.target;
     setCodeValue(value);
-    sendRequestDebounced(value);
-  };
+    sendRequestDebounced(value); 
+};
 
     function onSubmit (values){
         console.log(values)
         setSeconds(60)
         setCompleted(false)
         setLoading(true)
-       
+        
 
     }
     return (
@@ -80,6 +80,7 @@ function Codemodal(){
                         />
 
                  <div className="send-again-container">
+                    
                  <button 
                  type="submit" 
                  className={completed?"send-again-container-btn-active":"send-again-container-btn"}

@@ -205,7 +205,7 @@ top: 15px;
   display: flex;
   justify-content: space-around;
   align-items: center;
-  width: 900px;
+  width: 850px;
   top: 10px;
 }
 
@@ -220,7 +220,7 @@ top: 15px;
   font-weight: 700px;
   font-size: 20px;
   color: #494949;
- margin-right: 350px;
+ margin-right: 35%;
 }  
 
 .password-form__btn-container{
@@ -279,7 +279,6 @@ top: 15px;
 .profile-container{
   display: flex;
   width: 100%;
-  height: 100vh;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -356,9 +355,9 @@ top: 15px;
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 100vh;
   background: #eaeded;
   align-items: center;
+  height: 100vh;
 }
 
 .avatar{
@@ -367,7 +366,6 @@ top: 15px;
   justify-content: center;
   align-items: center;
   gap: 10px;
-  margin-top: 200px;
   margin-bottom: 50px;
 }
 
@@ -643,6 +641,113 @@ top: 15px;
   color: #494949;
 }
 
+.my-product{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 154px;
+  height: 184px;
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  position: relative;
+}
 
+.my-product__title{
+  font-size: 14px;
+  font-weight: 400px;
+  color: #000000;
+}
 
+.my-product__price{
+  font-size: 14px;
+  font-weight: 400px;
+  color:  #5D5FEF;
+}
 
+.my-product__icons-container{
+  height: 24px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding: 2px  0px 2px 5px;
+}
+
+.my-product__likes{
+  font-size: 12px;
+  font-weight: 400px;
+  color: #C1C1C1;
+}
+
+#more-icon{
+position: absolute;
+right: 0;
+margin: 0;
+}
+
+.my-product__text-container{
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding: 2px  0px 2px 5px;
+
+}
+
+.edit-delete-card{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  width: 136px;
+  height: 97px;
+  border-radius: 10px;
+  padding: 10px;
+  background: #ffffff;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  position: absolute;
+  margin-top: 150px;
+  margin-left: 50px;
+  z-index: 2;
+}
+
+.edit-container{
+  width: 100%;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: 15px;
+}
+
+.delete-container{
+  width: 100%;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-top: 1px solid  #F7F6F9;
+  padding-top: 15px;
+}
+
+.edit-text,.delete-text{
+  font-size: 16px;
+  font-weight: 400px;
+  color: #494949;
+  cursor: pointer;
+  right: 0;
+  bottom: 0;
+}
+
+.my-products-container{
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 10px;
+  height: 100vh;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 100px;
+}

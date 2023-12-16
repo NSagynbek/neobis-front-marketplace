@@ -1,5 +1,4 @@
 import { NavLink } from "react-router-dom"
-import {Formik,Form,Field} from "formik"
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import {IconButton,InputAdornment} from '@mui/material';
@@ -7,34 +6,57 @@ import userImagePlaceholder from "../assets/userImagePlaceholder.png"
 import heart from "../assets/heart.png"
 import shop from "../assets/shop.png"
 import exit from "../assets/exit.png"
-import avatar from "../assets/avatar.png"
 import Mobilemodal from "../modalWindows/Mobilemodal";
-import { useState } from "react";
+import Codemodal from "../modalWindows/Codemodal";
+import ProfileDetails from "./ProfileDetaile";
+import {useEffect} from "react";
+import {authinticatedUser,logOutRequest} from "../api";
+import MyProducts from "./MyProducts";
 
 
-const initialValues = {
-    name:"",
-    lastname:"",
-    birthDate:"",
-    mobile:"",
-    email:"",
-}
+
+
 
 function Profile(){
 
-    const [addMobile,setMobile]=useState(false);
+ 
+    
+    
+
+    useEffect(()=>{
+       async function getUser  (){
+        try{
+            const response = await authinticatedUser();
+            return response.data
+        } catch(error){
+            console.log(error)
+        }
+        
+
+        }
+
+        // getUser()
+    },[])
+
+     
+
 
     function onSubmit(values){
         console.log(values)
     }
 
-    function handleClick(){
-        setMobile(!addMobile)
-    }
 
+
+   
+  async  function logOut (){
+    const response = await logOutRequest()
+    navigate("/")
+
+    }
+    
     return(
         <div className="profile-container">
-         {addMobile?<Mobilemodal handleClick={handleClick}/>:null}
+    
             <div className="profile-details">
                 <div className="user-info-container">
                     <img src={userImagePlaceholder} alt={userImagePlaceholder} />
@@ -48,7 +70,7 @@ function Profile(){
                 <div className="liked-products">
                     <img src={heart} alt={heart} className="liked-products__img" />
                     <p className="profile-texts">Понравившиеся</p>
-                    <InputAdornment id="first-icon" className="profile-icons">
+                    <InputAdornment id="first-icon" className="profile-icons" position="start">
                     <IconButton edge="start"  >
                        <ArrowForwardIosIcon/>
                      </IconButton>
@@ -58,7 +80,7 @@ function Profile(){
                 <div className="products">
                     <img src={shop} alt={shop} className="products__img" />
                     <p className="profile-texts">Мои товары</p>
-                    <InputAdornment className="profile-icons">
+                    <InputAdornment className="profile-icons" position="start">
                     <IconButton edge="end"  >
                        <ArrowForwardIosIcon/>
                      </IconButton>
@@ -67,8 +89,11 @@ function Profile(){
 
                 <div className="profile-exit">
                     <img src={exit} alt={exit} className="profile-exit__icon" />
-                    <NavLink className="profile-exit__btn">Выйти</NavLink>
-                    <InputAdornment className="profile-icons">
+                    <NavLink 
+                    className="profile-exit__btn"
+                    onClick={logOut}
+                    >Выйти</NavLink>
+                    <InputAdornment className="profile-icons" position="start">
                     <IconButton edge="end" >
                        <ArrowForwardIosIcon/>
                      </IconButton>
@@ -98,74 +123,17 @@ function Profile(){
 
             </div>
 
-            <div className="avatar">
-                <img src={avatar} alt={avatar} className="avatar__img" />
-                <button className="avatar__upload-btn">Выбрать фотографию</button>
-            </div>
-
-            <div className="profile-form">
-                <Formik
-                initialValues={initialValues}
-                onSubmit={onSubmit}
-                >
-                    {(formikProps)=>(
-                        <Form className="profile-form-form">
-                            <div className="field-section-one">
-                            <Field
-                            type="text"
-                            name="name"
-                            id="name"
-                            placeholder="Имя"
-                            />
-
-                            <Field
-                            type="text"
-                            name="lastname"
-                            id="lastname"
-                            placeholder="Фамилия"
-                            />
-
-                             <Field
-                            type="text"
-                            name="birthDate"
-                            id="birthDate"
-                            placeholder="Дата рождения"
-                            />
-
-                            </div>
-
-                            <div className="field-section-one">
-
-                            <div className="mobile">
-                                <button 
-                                className="mobile__btn"
-                                onClick={handleClick}
-                                >
-                                    Добавить номер</button>
-                                <p className="mobile__text">0(000) 000 000</p>
-
-                            </div>
-
-                         
-
-                            <Field
-                            type="text"
-                            name="email"
-                            id="email"
-                            placeholder="почта"
-                            />
-
-                           </div>
-
-                        </Form>
-
-                    )}
-                    
-                </Formik>
+            <div className="my-products-container">
+             <ProfileDetails/>
+                {/* <MyProducts/> */}
 
             </div>
 
+      
+
             </div>
+
+            
 
         </div>
     )

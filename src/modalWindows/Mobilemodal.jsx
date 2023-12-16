@@ -1,7 +1,8 @@
 import phone from "../assets/phone.png"
 import {Formik,Form,Field,ErrorMessage} from "formik"
 import * as yup from "yup"
-import { useNavigate } from "react-router-dom"
+import { add } from "lodash"
+
 
 const initialValues = {
     number:"",
@@ -25,13 +26,16 @@ const validationSchema = yup.object().shape({
   
   
 
-function Mobilemodal ({handleClick}){
-    const navigate = useNavigate()
+function Mobilemodal ({closeModalPhone,openModalCode}){
+
+    
+
+  
 
     function onSubmit (values){
         console.log(values)
-        navigate("/code")
-
+        closeModalPhone()  
+        openModalCode()
     }
 
 

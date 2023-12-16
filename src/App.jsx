@@ -8,9 +8,13 @@ import Signup from "./components/Signup";
 import Password from "./components/Password";
 import Profile from "./components/Profile";
 import Mobilemodal from "./modalWindows/Mobilemodal";
+import MyProducts from "./components/MyProducts";
 import Codemodal from "./modalWindows/Codemodal";
+import EditDelete from "./modalWindows/EditDelete";
 import RootLayout from "./layouts/RootLayout"
 import {PrivateRoutes} from "./components/utils/PrivateRoutes"
+
+
 
 
 
@@ -44,6 +48,8 @@ function App() {
        <Route path="/profile" element={<Profile/>} />
        <Route path="/phone" element={<Mobilemodal/>} />
        <Route path="/code" element={<Codemodal/>} />
+       <Route path="/product" element={<MyProducts/>} />
+       <Route path="/edit" element={<EditDelete/>} />
       
 
         </Route>

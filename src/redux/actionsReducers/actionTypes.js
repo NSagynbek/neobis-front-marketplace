@@ -1,3 +1,4 @@
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS';
 export const FETCHING_DATA = "FETCHING_DATA"
+export const TOGGLE_MODAL = "TOGGLE_MODAL";

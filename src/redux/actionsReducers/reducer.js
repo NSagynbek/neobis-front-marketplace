@@ -2,24 +2,13 @@ import {
     LOGIN_SUCCESS,
     SIGNUP_SUCCESS,
     FETCHING_DATA,  
+    TOGGLE_MODAL
   } from "./actionTypes";
   
   const initialState = {
     loading: false,
     isAuthenticated: false,
-    token: null,
-    sentStatus:false,
-    errorMessage: null,
-    formData: {
-      email: "",
-      password: "",
-      username: "",
-      link: "",
-    },
-    user:{
-      username:"",
-      password:"",
-    },
+    modalWindowPhone:false,
   };
   
   const reducer = (state = initialState, action) => {
@@ -44,6 +33,12 @@ import {
             ...action.payload, 
           },
         }
+
+        case TOGGLE_MODAL:
+          return {
+            ...state,
+            modalWindowPhone:!state.modalWindowPhone
+          }
 
       
 
