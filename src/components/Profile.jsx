@@ -12,6 +12,8 @@ import ProfileDetails from "./ProfileDetaile";
 import {useEffect} from "react";
 import {authinticatedUser,logOutRequest} from "../api";
 import MyProducts from "./MyProducts";
+import ProductDetais from "../modalWindows/ProductDetails";
+import Exit from "../modalWindows/Exit";
 
 
 
@@ -124,8 +126,10 @@ function Profile(){
             </div>
 
             <div className="my-products-container">
-             <ProfileDetails/>
-                {/* <MyProducts/> */}
+             {/* <ProfileDetails/> */}
+                 {/* <MyProducts/>  */}
+                 {/* <ProductDetais/> */}
+                 <Exit/>
 
             </div>
 

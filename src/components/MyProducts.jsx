@@ -40,7 +40,7 @@ function MyProducts(){
                 <MoreVertIcon/>
               </IconButton>
             </InputAdornment>
-            <EditDelete/> 
+            {/* <EditDelete/>  */}
             </div>
 
 
