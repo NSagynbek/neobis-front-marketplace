@@ -6,9 +6,8 @@ import userImagePlaceholder from "../assets/userImagePlaceholder.png"
 import heart from "../assets/heart.png"
 import shop from "../assets/shop.png"
 import exit from "../assets/exit.png"
-import Mobilemodal from "../modalWindows/Mobilemodal";
 import Codemodal from "../modalWindows/Codemodal";
-import ProfileDetails from "./ProfileDetaile";
+import ProfileDetails from "./ProfileDetails";
 import {useEffect} from "react";
 import {authinticatedUser,logOutRequest} from "../api";
 import MyProducts from "./MyProducts";
@@ -126,10 +125,10 @@ function Profile(){
             </div>
 
             <div className="my-products-container">
-             {/* <ProfileDetails/> */}
+             <ProfileDetails/> 
                  {/* <MyProducts/>  */}
                  {/* <ProductDetais/> */}
-                 <Exit/>
+                 {/* <Exit/> */}
 
             </div>
 

@@ -14,12 +14,14 @@ import Mobilemodal from "./modalWindows/Mobilemodal";
 import MyProducts from "./components/MyProducts";
 import Codemodal from "./modalWindows/Codemodal";
 import EditDelete from "./modalWindows/EditDelete";
-import ProductDetais from "./modalWindows/ProductDetails";
+import ProductDetais from "./components/ProfileDetails";
 import ProductDetaisView from "./modalWindows/ProductDetailsView";
 import Delete from "./modalWindows/Delete";
 import Exit from "./modalWindows/Exit";
 import MainPage from "./components/MainPage";
 import AddProduct from "./modalWindows/AddProduct";
+import LikedProducts from "./components/LikedProducts";
+import ProfileDetails from "./components/ProfileDetails";
 
 
 
@@ -60,12 +62,13 @@ function App() {
        <Route path="/code" element={<Codemodal/>} />
        <Route path="/product" element={<MyProducts/>} />
        <Route path="/edit" element={<EditDelete/>} />
-       <Route path="/details" element={<ProductDetais/>} />
        <Route path="/view" element={<ProductDetaisView/>} />
        <Route path="/delete" element={<Delete/>} />
        <Route path="/exit" element={<Exit/>} />
        <Route path="/main" element={<MainPage/>} />
        <Route path="/add" element={<AddProduct/>} />
+       <Route path="/liked" element={<LikedProducts/>} />
+       <Route path="/details" element={<ProfileDetails/>} />
       
 
         </Route>

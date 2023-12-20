@@ -3,7 +3,10 @@ import add from "../assets/add.png"
 import {Formik, Form, Field,ErrorMessage} from "formik"
 import * as yup from "yup"
 import TextError from "../components/TextError";
-import { values } from "lodash";
+import { addProduct } from "../api";
+import CloseIcon from '@mui/icons-material/Close';
+import { IconButton,InputAdornment} from '@mui/material';
+
 
 
 const validationSchema = yup.object({
@@ -13,44 +16,40 @@ const validationSchema = yup.object({
     fullDescription: yup.string().required("напишите пожалуйста полное описание"),
 })
 
+
+
 const initialValues = {
     price:"",
     title:"",
     shortDescription:"",
     fullDescription:"",
-    file:null
 }
 
 function AddProduct(){
 
    
-    const [selectedFile, setSelectedFile] = useState(null);
-
-    const handleFileChange = (event) => {
-        setSelectedFile(event.currentTarget.files[0]);
-      };
+const [fieldValue, setFieldValue] = useState([])
 
 
+async function handleSubmit  (values){
+ const formData = new FormData();
+ formData.append('price', values.price);
+ formData.append('title', values.title);
+ formData.append('description', values.shortDescription);
+ formData.append('fullDescription', values.fullDescription);
+fieldValue.forEach((file, index) => {
+  formData.append(`file-${index}`, file);
+});
 
+const response = await addProduct(formData);
 
-    const handleSubmit =  (values,actions) => {
-        const formData = new FormData();
+}
 
-        selectedFile.forEach((file, index) => {
-            formData.append(`images[${index}]`, file);
-          });
+function handleChange (event){
+  const files = Array.from(event.target.files);
+  setFieldValue((prev) => [...prev, ...files]);
+}
 
-          formData.append('price', values.price);
-          formData.append('title', values.title);
-          formData.append('shortDescription', values.shortDescription);
-          formData.append('fullDescription', values.fullDescription);
-          formData.append('file', selectedFile);
-          
-      
-        console.log(formData)
-
-        actions.resetForm();
-      };
 
  
     return (
@@ -58,7 +57,35 @@ function AddProduct(){
 
             <div className="add-product-card">
 
-                
+            <InputAdornment position="end" className="add-product-card-close-icon">
+            <IconButton edge="end"  >
+                <CloseIcon  />
+            </IconButton>
+            </InputAdornment>
+     
+
+             <label htmlFor="file-upload" className="file-upload">
+              <img src={add} alt={add} className="file-upload-icon"  />
+                <input  
+                hidden             
+                name="file"
+                type="file"
+                id="file-upload"
+                multiple
+                onChange={handleChange}
+                />
+                <div className="image-container">
+                {fieldValue.length>0&&fieldValue.map((el,index)=>{
+                  return <img
+                  key={index}
+                  src={URL.createObjectURL(el)}
+                  alt={`Uploaded ${el.name}`} 
+                />
+
+                 })}
+                </div>
+
+             </label>
 
                 <Formik
                  initialValues={initialValues}
@@ -67,26 +94,7 @@ function AddProduct(){
                 >
                     {formikProps=>(
                         <Form className="add-form">
-
-    
-           <div>
-            <label htmlFor="file">Upload File:</label>
-            <Field
-              type="file"
-              id="file"
-              name="file"
-              onChange={(event) => {
-                formikProps.setFieldValue("file", event.currentTarget.files[0]);
-                handleFileChange(event);
-              }}
-            />
-            <ErrorMessage name="file" component="div" className="error" />
-          </div>
-      
-
-
-
-
+  
 
                             <Field
                             type="text"

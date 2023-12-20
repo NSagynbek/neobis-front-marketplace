@@ -1,6 +1,6 @@
-import { LOGIN_SUCCESS} from "./actionTypes"
+import { LOGIN_SUCCESS, TOGGLE_SMS} from "./actionTypes"
 import { SIGNUP_SUCCESS}from "./actionTypes"
-import {TOGGLE_MODAL} from "./actionTypes"
+
 
 
 export const loginSuccess = (jwt) => {
@@ -17,9 +17,9 @@ export const loginSuccess = (jwt) => {
    }
   };
 
-  export const toggleModalPhone =()=>{
+  export const toggleSms =()=>{
     return {
-        type:TOGGLE_MODAL
+        type:TOGGLE_SMS
     }
   }
 

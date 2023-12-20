@@ -1,7 +1,10 @@
 import phone from "../assets/phone.png"
 import {Formik,Form,Field,ErrorMessage} from "formik"
+import CloseIcon from '@mui/icons-material/Close';
+import { IconButton,InputAdornment } from "@mui/material";
 import * as yup from "yup"
-import { add } from "lodash"
+import {useDispatch } from "react-redux"
+import { toggleSms } from "../redux";
 
 
 const initialValues = {
@@ -26,25 +29,37 @@ const validationSchema = yup.object().shape({
   
   
 
-function Mobilemodal ({closeModalPhone,openModalCode}){
+function Mobilemodal ({handleClick}){
 
     
-
+   const dispatch = useDispatch()
   
 
     function onSubmit (values){
         console.log(values)
-        closeModalPhone()  
-        openModalCode()
+        handleClick()
+        dispatch(toggleSms())
+    }
+   
+    const closeWindow = ()=>{
+        handleClick()
     }
 
-
-
+   
 
     return (
         <div className="mobile-modal-overlay">
 
             <div className="mobile-modal">
+            <InputAdornment 
+            position="end" 
+            className="mobile-modal__close"
+            onClick={closeWindow}
+            >
+            <IconButton edge="end">
+                <CloseIcon/>
+            </IconButton>
+        </InputAdornment>
             <p className="mobile-modal__heading">Изменить номер телефона</p>
 
             <div className="mobile-modal__content">

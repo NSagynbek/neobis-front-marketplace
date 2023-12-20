@@ -1,8 +1,9 @@
 import placeholder from "../assets/placeholder.png"
 import { useState,useEffect } from "react"
 import PuffLoader from "react-spinners/ClipLoader";
-import { useNavigate } from "react-router-dom";
 import debounce from "lodash/debounce";
+import {useDispatch } from "react-redux"
+import { toggleSms } from "../redux";
 
 
 const override ={
@@ -16,7 +17,9 @@ const initialValues ={
     code:"",
 }
 
-function Codemodal({closeModalCode}){
+function Codemodal(){
+
+  const dispatch = useDispatch();
 
     const [completed,setCompleted] =useState(false);
     const [seconds,setSeconds]=useState(60);
@@ -42,7 +45,7 @@ function Codemodal({closeModalCode}){
     
     if (code.length === 4) {
         console.log("Sending API request with code:", code);
-        closeModalCode() // i can call this function upon successful response from the server 
+         dispatch(toggleSms())
       }
    
   }, 1000);

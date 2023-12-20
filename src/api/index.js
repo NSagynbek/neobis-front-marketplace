@@ -58,3 +58,20 @@ export const logOutRequest = async ()=>{
     const res = await instance.post("log-out")
     return res.data
 }
+
+export const addProduct = async (data)=>{
+    const res = await instance.post("add-product")
+    return res.data
+}
+
+export const getProfileDetails = async ()=>{
+    const res = await instance.get("profile-detais")
+    return res.data
+}
+
+export const updateUserDetails = async ()=>{
+    const res = await instance.post("update-detais")
+    return res.data
+}
+
+

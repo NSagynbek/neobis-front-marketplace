@@ -2,13 +2,13 @@ import {
     LOGIN_SUCCESS,
     SIGNUP_SUCCESS,
     FETCHING_DATA,  
-    TOGGLE_MODAL
+    TOGGLE_SMS
   } from "./actionTypes";
   
   const initialState = {
     loading: false,
     isAuthenticated: false,
-    modalWindowPhone:false,
+    smsCode:false,
   };
   
   const reducer = (state = initialState, action) => {
@@ -34,10 +34,10 @@ import {
           },
         }
 
-        case TOGGLE_MODAL:
+        case TOGGLE_SMS:
           return {
             ...state,
-            modalWindowPhone:!state.modalWindowPhone
+            smsCode:!state.smsCode
           }
 
       
