@@ -8,8 +8,8 @@ import shop from "../assets/shop.png"
 import exit from "../assets/exit.png"
 import Codemodal from "../modalWindows/Codemodal";
 import ProfileDetails from "./ProfileDetails";
-import {useEffect} from "react";
-import {authinticatedUser,logOutRequest} from "../api";
+import {useEffect, useState} from "react";
+import {getProfileDetails} from "../api";
 import MyProducts from "./MyProducts";
 import ProductDetais from "../modalWindows/ProductDetails";
 import Exit from "../modalWindows/Exit";
@@ -20,23 +20,27 @@ import Exit from "../modalWindows/Exit";
 
 function Profile(){
 
- 
+ const [username, setUsername] = useState("")
+ const [name, setName] = useState("")
     
     
 
     useEffect(()=>{
        async function getUser  (){
         try{
-            const response = await authinticatedUser();
-            return response.data
+            const response = await getProfileDetails();
+            setUsername(response.username)
+            setName(response.firstname)
+
         } catch(error){
-            console.log(error)
+            console.log(error.response.status)
+            console.log(error.message)
         }
         
 
         }
 
-        // getUser()
+        getUser()
     },[])
 
      
@@ -62,8 +66,8 @@ function Profile(){
                 <div className="user-info-container">
                     <img src={userImagePlaceholder} alt={userImagePlaceholder} />
                     <div className="user-info">
-                    <p className="user-info__name">Name</p>
-                    <p className="user-info__username">Username</p>
+                    <p className="user-info__name">{name}</p>
+                    <p className="user-info__username">{username}</p>
                     </div>
                     
                 </div>

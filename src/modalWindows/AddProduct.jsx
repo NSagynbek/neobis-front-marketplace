@@ -3,7 +3,6 @@ import add from "../assets/add.png"
 import {Formik, Form, Field,ErrorMessage} from "formik"
 import * as yup from "yup"
 import TextError from "../components/TextError";
-import { addProduct } from "../api";
 import CloseIcon from '@mui/icons-material/Close';
 import { IconButton,InputAdornment} from '@mui/material';
 

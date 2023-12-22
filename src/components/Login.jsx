@@ -1,4 +1,4 @@
-import { loginSuccess } from '../redux';
+import { loginSuccess, tokenRefresh } from '../redux';
 import {useDispatch} from "react-redux"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -10,10 +10,11 @@ import { useState } from "react";
 import {Formik,Form,Field,ErrorMessage} from "formik"
 import * as yup from "yup"
 import {NavLink} from "react-router-dom"
-import { login,setAuthToken } from '../api';
+import { login } from '../api';
+import { useNavigate } from 'react-router-dom';
 
 import TextError from "./TextError";
-import axios from 'axios';
+
 
 const initialValues ={
     username:"",
@@ -26,8 +27,8 @@ const validationSchema = yup.object({
 })
 
 
-const notify = ()=>{
-    toast.error('Неверный логин или пароль!', {
+const notify = (msg)=>{
+    toast.error(msg, {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -41,22 +42,33 @@ const notify = ()=>{
 
 
 function Login (){
+
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+
     const [iconToggle,setIconToggle] = useState(false);
+    const [errors, setErrors] = useState(false);
 
 
 const  onSubmit = async (values)=>{
-        console.log(values)
-        notify()
+        
         try{
             const response = await login(values)
-            const token = response.token;
-            setAuthToken(token)
+            const token = response.accessToken;
+            console.log(token)
+             localStorage.setItem('accessToken', response.accessToken);
+             localStorage.setItem('refreshToken', response.refreshToken);
+             localStorage.setItem('username', values.username);
             dispatch(loginSuccess())
-            console.log(response)
+            dispatch(tokenRefresh(values.username))
+            navigate("/profile")
+            console.log(response.accessToken)
 
         } catch(error){
+            setErrors(!errors)
             console.log(error)
+            notify(error.response.data.message)
+            
         }
         
 }
@@ -89,7 +101,7 @@ const  onSubmit = async (values)=>{
                     id="login"
                     name="username"
                     placeholder = "Имя пользователя"
-                    className={iconToggle?"error":""}
+                    className={errors?"error":""}
                     />
                     <ErrorMessage  name="username"  component={TextError}/>
 
@@ -101,7 +113,7 @@ const  onSubmit = async (values)=>{
                     id="password"
                     name="password"
                     placeholder = "Пароль"
-                    className={iconToggle?"error":""}
+                    className={errors?"error":""}
                     />
                      <ErrorMessage name="password" component={TextError}/>
                     <InputAdornment position="end" className="mu-icon">

@@ -4,30 +4,38 @@ import { useState,useEffect } from "react"
 import Mobilemodal from "../modalWindows/Mobilemodal";
 import Codemodal from "../modalWindows/Codemodal";
 import { useSelector} from "react-redux"
-import { getProfileDetails,updateUserDetails } from "../api";
+import { getProfileDetails,updateProfileDetails } from "../api";
+import axios from "axios";
 
 
 
 
 const initialValues = {
-    name:"",
+    firstname:"",
     lastname:"",
-    birthDate:"",
+    birthday:"",
     email:"",
 }
 
 
 function ProfileDetails (){
-    
-const [initialFormValues, setInitialFormValues] = useState(initialValues);
-const [fieldValue, setFieldValue] = useState(null)
+    const [number,setNumber] = useState(false);
+    const [editMode, setEditMode] = useState(false)
+    const smsCode = useSelector(state => state.smsCode)
+    const [formValues, setFormValues] = useState(initialValues);
+    const [fieldValue, setFieldValue] = useState(null)
 
 useEffect(()=>{
     const getUserProfileDetails = async ()=>{
         try{
             const res = await getProfileDetails()
-            const userData = res.data;
-            setInitialFormValues(userData);
+            setFormValues({
+                firstname: res.firstname || '',
+                lastname: res.lastname || '',
+                birthday: res.birthday || '',
+                email: res.email || '',
+              });
+            console.log(res)
         }catch(error){
             console.log(error)
         }
@@ -36,22 +44,23 @@ useEffect(()=>{
     getUserProfileDetails()
 },[])
 
-const [number,setNumber] = useState(false);
-const [editMode, setEditMode] = useState(false)
-const smsCode = useSelector(state => state.smsCode)
+
 
 
    async function onSubmit(values){
-    const formData = new FormData();
-    formData.append('name', values.name);
-    formData.append('lastname', values.lastname);
-    formData.append('birthDate', values.birthDate);
-    formData.append('email', values.email);
-    formData.append('avatarImage', fieldValue);
-        const res = await updateUserDetails(formData)
-        console.log(formData)        
-
+    const formData = {       
+  firstname: values.firstname,
+  lastname: values.lastname,
+  birthday: values.birthday
     }
+    try{
+        console.log(formData)
+        const response = await updateProfileDetails(formData)
+        console.log(response)
+    }catch(error){
+        console.log(error)
+    }              
+}
 
 const  handleClick = ()=>{
         setNumber(!number)
@@ -91,7 +100,8 @@ const  handleClick = ()=>{
 
             <div className="profile-form">
                 <Formik
-                initialValues={initialValues}
+                initialValues={formValues}
+                enableReinitialize={true}
                 onSubmit={onSubmit}
                 >
                     {(formikProps)=>(
@@ -101,7 +111,7 @@ const  handleClick = ()=>{
                                     <>
                             <Field
                             type="text"
-                            name="name"
+                            name="firstname"
                             id="name"
                             placeholder="Имя"
                             />
@@ -115,7 +125,7 @@ const  handleClick = ()=>{
 
                              <Field
                             type="text"
-                            name="birthDate"
+                            name="birthday"
                             id="birthDate"
                             placeholder="Дата рождения"
                             />
@@ -134,7 +144,7 @@ const  handleClick = ()=>{
                                 <>
                                  <Field
                             type="text"
-                            name="name"
+                            name="firstname"
                             id="name"
                             placeholder="Имя"
                             readOnly
@@ -150,7 +160,7 @@ const  handleClick = ()=>{
 
                              <Field
                             type="text"
-                            name="birthDate"
+                            name="birthday"
                             id="birthDate"
                             placeholder="Дата рождения"
                             readOnly

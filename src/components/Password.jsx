@@ -1,4 +1,5 @@
 import { ToastContainer, toast } from 'react-toastify';
+import { useSelector } from 'react-redux';
 import 'react-toastify/dist/ReactToastify.css';
 import photoBackground from "../assets/PhotoBackground.png"
 import frame from "../assets/Frame.png"
@@ -10,6 +11,8 @@ import { useState } from "react";
 import {Formik,Form,Field,ErrorMessage} from "formik"
 import * as yup from "yup"
 import {NavLink} from "react-router-dom"
+import { signup } from '../api';
+import { useNavigate } from 'react-router-dom';
 
 import TextError from "./TextError";
 import PasswordTextError from './PasswordTextError';
@@ -18,6 +21,43 @@ const initialValues ={
     password:"",
     secondPassword:"",
 }
+
+const notify = (type,msg)=>{
+    switch(type){
+        case "success":
+            toast.success(msg, {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+                });
+
+            break;
+
+        case "error":
+            toast.error(msg, {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+                });
+
+            break;    
+    }
+    
+  }
+
+
+  
+
 
 const validationSchema = yup.object({
     password: yup
@@ -39,11 +79,36 @@ const validationSchema = yup.object({
 
 
 function Password (){
+    const navigate = useNavigate()
     const [iconToggle,setIconToggle] = useState(false)
+    const usernamePassword = useSelector(state => state.usernamePassword)
 
 
-    function onSubmit (values){
-        console.log(values)
+   async function onSubmit (values){
+        const formdata = {
+            username:usernamePassword.username,
+            email:usernamePassword.email,
+            password:values.password,           
+        }
+
+        try{
+            const response = await signup(formdata)
+            console.log(response)
+            notify("success",response)
+            setTimeout(() => {
+                navigate("/");
+              },3000);
+
+        }catch(error){
+            console.log(error.response.data.message)
+            notify("error",error.response.data.message+" "+"пожалуйста, попробуйте еще раз с другим адресом электронной почты")
+            setTimeout(() => {
+                navigate("/signup");
+              },9000);
+            
+        }
+
+        
       
 
     }
@@ -139,6 +204,7 @@ function Password (){
 
             </Formik>
             </div>
+            <ToastContainer/>
         </div>
     )
 }

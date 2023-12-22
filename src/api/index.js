@@ -1,77 +1,96 @@
 import axios from "axios"
 
+
 const instance = axios.create({
-    withCredentials:true,
-    baseURL: "https://auth-neobis.up.railway.app/api/auth/",
+    baseURL: "https://mobi-market-production.up.railway.app/",
     headers:{
         "Content-Type":"application/json",
-        
+           
     }
 
 }); 
 
-export const setAuthToken = (token) => {
-    if (token) {
-        instance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-    } else {
-        delete instance.defaults.headers.common["Authorization"];
-    }
-};
+
 
 
 export const login = async (data)=>{
-    const res = await instance.post("sign-in",data)
+    const res = await instance.post("api/v1/auth/login",data)
     return res.data
-}
-
-export const authinticatedUser = async ()=>{
-    const response = await instance.post("user")
-    return response.data
 }
 
 export const signup = async (data)=>{
-    const res = await instance.post("sign-up",data)
+    const res = await instance.post("api/v1/auth/registration",data)
     return res.data
 }
 
-export const ensureRegistration = async (token)=>{
-    const res = await instance.put("ensure-registration",null,{
-        params:{
-            token:token
-        }
+// export const authinticatedUser = async ()=>{
+//     const response = await instance.post("user")
+//     return response.data
+// }
+
+
+
+// export const ensureRegistration = async (token)=>{
+//     const res = await instance.put("ensure-registration",null,{
+//         params:{
+//             token:token
+//         }
+//     })
+//     return res.data
+// }
+
+// export const sendMessage = async (data)=>{
+//     const urlParam = 'https://http://localhost:5173/main';
+
+//     const res = await instance.put("send-message",data,{
+//         params:{
+//             link:urlParam
+//         }
+//     })
+//     return res.data
+// }
+
+export const codeConfirmation = async (data)=>{
+    const res = await instance.post("api/v1/users/registerConfirm",
+    data,{
+       headers: {
+           Authorization: "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzaG9lIiwiaWF0IjoxNzAzMTc5Mjc0LCJleHAiOjE3MDMxODAxNzR9.AwRuogscGyz4XN7ZsQYGVM2KZ2bJJQPNMaqQEoVP9co",
+         },
     })
     return res.data
 }
 
-export const sendMessage = async (data)=>{
-    const urlParam = 'https://example.com/your-url';
 
-    const res = await instance.put("send-message",data,{
-        params:{
-            link:urlParam
-        }
-    })
-    return res.data
-}
 
-export const logOutRequest = async ()=>{
-    const res = await instance.post("log-out")
-    return res.data
-}
-
-export const addProduct = async (data)=>{
-    const res = await instance.post("add-product")
-    return res.data
-}
+ export const addPhoneNumber = async (data)=>{
+     const res = await instance.post("api/v1/users/send-sms",
+     data,{
+        headers: {
+            Authorization: "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzaG9lIiwiaWF0IjoxNzAzMTc5Mjc0LCJleHAiOjE3MDMxODAxNzR9.AwRuogscGyz4XN7ZsQYGVM2KZ2bJJQPNMaqQEoVP9co",
+          },
+     })
+     return res.data
+ }
 
 export const getProfileDetails = async ()=>{
-    const res = await instance.get("profile-detais")
+    const res = await instance.get("api/v1/users/getUserById/1",{
+        headers: {
+            Authorization: "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzaG9lIiwiaWF0IjoxNzAzMTc5Mjc0LCJleHAiOjE3MDMxODAxNzR9.AwRuogscGyz4XN7ZsQYGVM2KZ2bJJQPNMaqQEoVP9co",
+          },
+    })
     return res.data
 }
 
-export const updateUserDetails = async ()=>{
-    const res = await instance.post("update-detais")
+export const updateProfileDetails = async (data)=>{
+    const res = await instance.put("api/v1/users/updateUserProfile",
+    data,{
+        headers: {
+            Authorization: "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzaG9lIiwiaWF0IjoxNzAzMTc5Mjc0LCJleHAiOjE3MDMxODAxNzR9.AwRuogscGyz4XN7ZsQYGVM2KZ2bJJQPNMaqQEoVP9co",
+          },
+    })
+    
     return res.data
 }
+
 
 

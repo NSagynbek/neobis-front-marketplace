@@ -2,13 +2,20 @@ import {
     LOGIN_SUCCESS,
     SIGNUP_SUCCESS,
     FETCHING_DATA,  
-    TOGGLE_SMS
+    TOGGLE_SMS,
+    USERNAME_PASSWORD,
+    REFRESH_TOKEN,
   } from "./actionTypes";
   
   const initialState = {
     loading: false,
     isAuthenticated: false,
     smsCode:false,
+    usernamePassword:{
+      username:"",
+      email:"",
+    },
+    username:"",
   };
   
   const reducer = (state = initialState, action) => {
@@ -39,6 +46,21 @@ import {
             ...state,
             smsCode:!state.smsCode
           }
+
+        case USERNAME_PASSWORD:
+          return {
+            ...state,
+            usernamePassword:{
+              ...state.usernamePassword,
+              ...action.payload
+            },
+          } 
+        
+        case REFRESH_TOKEN:
+          return {
+            ...state,
+            username:action.payload
+          }  
 
       
 

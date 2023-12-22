@@ -1,14 +1,13 @@
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import photoBackground from "../assets/PhotoBackground.png"
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import { IconButton, InputAdornment } from '@mui/material';
 import { useState } from "react";
 import {Formik,Form,Field,ErrorMessage} from "formik"
 import * as yup from "yup"
 import {NavLink} from "react-router-dom"
+import { useNavigate } from 'react-router-dom';
+import { basket } from '../redux';
+import {useDispatch } from 'react-redux';
 
 import TextError from "./TextError";
 
@@ -23,33 +22,24 @@ const validationSchema = yup.object({
 })
 
 
-const notify = ()=>{
-    toast.error('Данный пользователь уже зарегистрирован!', {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-        });
-  }
+
 
 
 function Signup (){
-    const [iconToggle,setIconToggle] = useState(false)
+
+    const [errors,setErrors] = useState(false);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+   async function onSubmit  (values){
+  
+   dispatch(basket(values))
+   navigate("/password")
+    
+          
+}
 
 
-    function onSubmit (values){
-        console.log(values)
-        notify()
-
-    }
-
-    function passwordVisibility(){
-        setIconToggle(!iconToggle);
-    }
 
     
 
@@ -91,7 +81,7 @@ function Signup (){
                     id="login"
                     name="username"
                     placeholder = "Имя пользователя"
-                    className={iconToggle?"error":""}
+                    className={errors?"error":""}
                     />
                     <ErrorMessage  name="username"  component={TextError}/>
 
@@ -99,23 +89,15 @@ function Signup (){
 
                     <div className="input-password">
                     <Field
-                    type={iconToggle?"text":"password"}
+                    type="text"
                     id="password"
                     name="email"
                     placeholder = "Почта"
-                    className={iconToggle?"error":""}
+                    className={errors?"error":""}
                     />
                      <ErrorMessage name="email" component={TextError}/>
-                    <InputAdornment position="end" className="mu-icon">
-                        <IconButton onClick={passwordVisibility} edge="end">
-                            {iconToggle?(
-                            <VisibilityIcon style={{ color:formikProps.dirty&&formikProps.isValid?"#5458EA":"" }}
-                            />
-                            ):(<VisibilityOffIcon 
-                            style={{ color:formikProps.dirty&&formikProps.isValid?"#5458EA":"" }}
-                            />)}
-                        </IconButton>
-                    </InputAdornment>
+
+                 
                     </div>
 
                     <button
@@ -132,7 +114,7 @@ function Signup (){
             
            
             </div>
-            <ToastContainer/>
+            
         </div>
     )
 }

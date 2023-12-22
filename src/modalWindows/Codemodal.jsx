@@ -4,6 +4,7 @@ import PuffLoader from "react-spinners/ClipLoader";
 import debounce from "lodash/debounce";
 import {useDispatch } from "react-redux"
 import { toggleSms } from "../redux";
+import { codeConfirmation } from "../api";
 
 
 const override ={
@@ -16,6 +17,8 @@ const override ={
 const initialValues ={
     code:"",
 }
+
+
 
 function Codemodal(){
 
@@ -44,7 +47,9 @@ function Codemodal(){
   const sendRequestDebounced = debounce((code) => {
     
     if (code.length === 4) {
-        console.log("Sending API request with code:", code);
+        const codeConfirmAsync = async ()=>{
+          const response = await codeConfirmation()
+        }
          dispatch(toggleSms())
       }
    

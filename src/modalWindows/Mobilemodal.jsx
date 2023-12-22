@@ -5,6 +5,8 @@ import { IconButton,InputAdornment } from "@mui/material";
 import * as yup from "yup"
 import {useDispatch } from "react-redux"
 import { toggleSms } from "../redux";
+import { addPhoneNumber } from "../api";
+import axios from "axios";
 
 
 const initialValues = {
@@ -35,10 +37,15 @@ function Mobilemodal ({handleClick}){
    const dispatch = useDispatch()
   
 
-    function onSubmit (values){
-        console.log(values)
+    async function onSubmit (values){
+        let user = localStorage.getItem("username");
+        const formData = {
+            phoneNumber:values.number,
+            username: user,
+        }
         handleClick()
         dispatch(toggleSms())
+        const response = await addPhoneNumber(formData)
     }
    
     const closeWindow = ()=>{
