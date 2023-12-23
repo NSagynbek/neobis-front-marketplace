@@ -24,18 +24,18 @@ const validationSchema = yup.object().shape({
         return value && value.startsWith('+');
       })
       .test('correct-length', 'Должен содержать от 10 до 12 цифр после символа "+"', (value) => {
-        const phoneNumber = value && value.replace(/\D/g, ''); 
+        const phoneNumber = value && value.replace(/\D/g, '');
         return phoneNumber && phoneNumber.length >= 10 && phoneNumber.length <= 12;
       }),
   });
-  
-  
+
+
 
 function Mobilemodal ({handleClick}){
 
-    
+
    const dispatch = useDispatch()
-  
+
 
     async function onSubmit (values){
         let user = localStorage.getItem("username");
@@ -45,21 +45,21 @@ function Mobilemodal ({handleClick}){
         }
         handleClick()
         dispatch(toggleSms())
-        const response = await addPhoneNumber(formData)
+        // const response = await addPhoneNumber(formData)
     }
-   
+
     const closeWindow = ()=>{
         handleClick()
     }
 
-   
+
 
     return (
         <div className="mobile-modal-overlay">
 
             <div className="mobile-modal">
-            <InputAdornment 
-            position="end" 
+            <InputAdornment
+            position="end"
             className="mobile-modal__close"
             onClick={closeWindow}
             >
@@ -87,8 +87,8 @@ function Mobilemodal ({handleClick}){
                         placeholder="+(000) 000 000 000"
                         />
                     <ErrorMessage name="number"/>
-                        <button 
-                        type="submit" 
+                        <button
+                        type="submit"
                         className={`mobile-form-submit-btn ${formikProps.dirty&&formikProps.isValid?"mobile-form-submit-btn-active":""}`}
                         disabled = {!formikProps.dirty&&!formikProps.isValid}
                         >
@@ -102,7 +102,7 @@ function Mobilemodal ({handleClick}){
 
             </div>
 
-            
+
             </div>
 
         </div>

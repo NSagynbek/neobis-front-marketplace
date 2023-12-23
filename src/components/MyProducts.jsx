@@ -3,6 +3,8 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import {IconButton,InputAdornment} from '@mui/material';
 import cardImage from "../assets/cardImage.png"
 import EditDelete from '../modalWindows/EditDelete';
+import { useEffect,useState } from 'react';
+import { getMyItems } from '../api';
 
 
 
@@ -11,7 +13,23 @@ import EditDelete from '../modalWindows/EditDelete';
 
 function MyProducts(){
 
+  const [more,setMore] = useState(false)
+  
 
+  useEffect(()=>{
+    const getMyProducts = async ()=>{
+      const response = await getMyItems()
+      console.log(response)
+  
+    }
+    // getMyProducts();
+  
+  },[])
+
+
+  const handleClick = ()=>{
+    setMore(!more)
+  }
 
 
 
@@ -35,12 +53,16 @@ function MyProducts(){
             </InputAdornment>
                 <p className='my-product__likes'>100</p>
 
-            <InputAdornment id="more-icon"  position="start">
+            <InputAdornment 
+            id="more-icon"  
+            position="start"
+            onClick={handleClick}
+            >
               <IconButton edge="start"  >
                 <MoreVertIcon/>
               </IconButton>
             </InputAdornment>
-            {/* <EditDelete/>  */}
+            {more?<EditDelete setMore={setMore} />:""}
             </div>
 
 

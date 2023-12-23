@@ -2,6 +2,7 @@ import {Formik, Form, Field} from "formik"
 import shoes from "../assets/shoes.png"
 import CloseIcon from '@mui/icons-material/Close';
 import { IconButton, InputAdornment } from '@mui/material';
+import { useState,useEffect } from "react";
 
 const initialValues = {
     price:"",
@@ -10,17 +11,29 @@ const initialValues = {
     features:"",
 }
 
-function ProductDetais (){
+function ProductDetais ({handleEdit}){
 
-    function onSubmit(values){
-        console.log(values)
-    }
+    
+
+  function onSubmit(values){
+    console.log(values)
+  }
+
+  const handleClick = ()=>{
+    handleEdit()
+  }
+
+
 
     return (
         <div className="mobile-modal-overlay">
         <div className="details-card"> 
 
-        <InputAdornment position="end" className="details-card__icon">
+        <InputAdornment 
+        position="end" 
+        className="details-card__icon"
+        onClick={handleClick}
+        >
             <IconButton edge="end">
                 <CloseIcon/>
             </IconButton>

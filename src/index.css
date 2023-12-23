@@ -299,6 +299,10 @@ top: 15px;
   gap: 15px;
 }
 
+.user-info-container img{
+  cursor: pointer;
+}
+
 .liked-products{
   display: flex;
   width: 100%;

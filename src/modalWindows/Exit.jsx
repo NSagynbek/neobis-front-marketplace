@@ -1,10 +1,22 @@
 import LogoutIcon from '@mui/icons-material/Logout';
 import { IconButton } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
-function Exit() {
+
+function Exit({logOut}) {
+
+  const navigate = useNavigate();
+
   const handleDeleteClick = () => {
-    
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+    localStorage.removeItem('username');
+    navigate("/")
   };
+
+  const handleStay = ()=>{
+    logOut()
+  }
 
   return (
     <div className="mobile-modal-overlay">
@@ -19,7 +31,11 @@ function Exit() {
 
         <p className='delete-card__text'>Вы действительно хотите выйти с приложения?</p>
         <button className='delete-card__delete' onClick={handleDeleteClick}>Выйти</button>
-        <button className='delete-card__cancel'>Отмена</button>
+        <button
+         className='delete-card__cancel'
+         onClick={handleStay}
+         >
+          Отмена</button>
       </div>
     </div>
   );

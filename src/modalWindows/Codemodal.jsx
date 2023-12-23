@@ -44,13 +44,18 @@ function Codemodal(){
 
   },[seconds])
 
-  const sendRequestDebounced = debounce((code) => {
+  const sendRequestDebounced = debounce(async(code) => {
     
     if (code.length === 4) {
-        const codeConfirmAsync = async ()=>{
-          const response = await codeConfirmation()
+        try{
+          const response = await codeConfirmation(code)
+         
+        }catch(error){
+          console.log(error)
         }
-         dispatch(toggleSms())
+        dispatch(toggleSms())
+        
+         
       }
    
   }, 1000);

@@ -5,25 +5,28 @@ import {IconButton,InputAdornment} from '@mui/material';
 import userImagePlaceholder from "../assets/userImagePlaceholder.png"
 import heart from "../assets/heart.png"
 import shop from "../assets/shop.png"
-import exit from "../assets/exit.png"
+import Exitt from "../assets/exit.png"
 import Codemodal from "../modalWindows/Codemodal";
-import ProfileDetails from "./ProfileDetails";
 import {useEffect, useState} from "react";
 import {getProfileDetails} from "../api";
 import MyProducts from "./MyProducts";
-import ProductDetais from "../modalWindows/ProductDetails";
 import Exit from "../modalWindows/Exit";
-
+import ProfileDetails from "./ProfileDetails";
+import LikedProducts from "./LikedProducts"
+import axios from "axios";
 
 
 
 
 function Profile(){
 
- const [username, setUsername] = useState("")
- const [name, setName] = useState("")
-    
-    
+ const [username, setUsername] = useState("");
+ const [name, setName] = useState("");
+ const [selectedCategory, setSelectedCategory] = useState('profile');
+ const [exit,setExit] = useState(false);
+
+ 
+
 
     useEffect(()=>{
        async function getUser  (){
@@ -40,7 +43,7 @@ function Profile(){
 
         }
 
-        getUser()
+         getUser()
     },[])
 
      
@@ -53,28 +56,36 @@ function Profile(){
 
 
    
-  async  function logOut (){
-    const response = await logOutRequest()
-    navigate("/")
-
-    }
+  const logOut = ()=>{
+    setExit(!exit)
+}
     
     return(
         <div className="profile-container">
     
             <div className="profile-details">
                 <div className="user-info-container">
-                    <img src={userImagePlaceholder} alt={userImagePlaceholder} />
+                    <img 
+                    src={userImagePlaceholder} 
+                    alt={userImagePlaceholder} 
+                    onClick={()=>setSelectedCategory("profile")}
+                    />
                     <div className="user-info">
-                    <p className="user-info__name">{name}</p>
-                    <p className="user-info__username">{username}</p>
+                    <p className="user-info__name"
+                    onClick={()=>setSelectedCategory("profile")}
+                    >{name}</p>
+                    <p className="user-info__username"
+                    onClick={()=>setSelectedCategory("profile")}
+                    >{username}</p>
                     </div>
                     
                 </div>
 
-                <div className="liked-products">
+                <div className="liked-products" 
+                onClick={()=>setSelectedCategory("lekedProducts")}
+                >
                     <img src={heart} alt={heart} className="liked-products__img" />
-                    <p className="profile-texts">Понравившиеся</p>
+                    <p className="profile-texts">Понравившиеся </p>         
                     <InputAdornment id="first-icon" className="profile-icons" position="start">
                     <IconButton edge="start"  >
                        <ArrowForwardIosIcon/>
@@ -82,9 +93,11 @@ function Profile(){
                      </InputAdornment>
                      
                 </div>
-                <div className="products">
+                <div className="products"
+                onClick={()=>setSelectedCategory("myProducts")}
+                >
                     <img src={shop} alt={shop} className="products__img" />
-                    <p className="profile-texts">Мои товары</p>
+                    <p className="profile-texts">Мои товары</p>                   
                     <InputAdornment className="profile-icons" position="start">
                     <IconButton edge="end"  >
                        <ArrowForwardIosIcon/>
@@ -92,12 +105,14 @@ function Profile(){
                      </InputAdornment>
                 </div>
 
-                <div className="profile-exit">
-                    <img src={exit} alt={exit} className="profile-exit__icon" />
+                <div className="profile-exit"
+                onClick={logOut}
+                >
+                    <img src={Exitt} alt={Exitt} className="profile-exit__icon" />
                     <NavLink 
                     className="profile-exit__btn"
-                    onClick={logOut}
                     >Выйти</NavLink>
+
                     <InputAdornment className="profile-icons" position="start">
                     <IconButton edge="end" >
                        <ArrowForwardIosIcon/>
@@ -123,17 +138,18 @@ function Profile(){
                    </NavLink>
                  </label>
 
-             <p className='profile-header-text'>Профиль</p>
+             <p className='profile-header-text' onClick={test}>Профиль</p>
 
 
             </div>
 
             <div className="my-products-container">
-             <ProfileDetails/> 
-                 {/* <MyProducts/>  */}
-                 {/* <ProductDetais/> */}
-                 {/* <Exit/> */}
+              
 
+              {selectedCategory === 'profile' && <ProfileDetails/>}
+              {selectedCategory === 'myProducts' && <MyProducts/>}
+              {selectedCategory === 'lekedProducts' && <LikedProducts />}
+               {exit?<Exit logOut={logOut} />:""}
             </div>
 
       
