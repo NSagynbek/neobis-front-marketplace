@@ -164,7 +164,7 @@ function Password (){
             <div className='password-form__info'>
                 <img src={frame} alt={frame} />
                 <p className='password-form__info-title'>Придумайте пароль</p>
-                <p className='password-form__info-text'>Минимальная длина — 8 символов. Для надежности пароль должен содержать буквы и цифры.</p>
+                <p className='password-form__info-text'>Минимальная длина — 8 символов. Для надежности пароль должен содержать буквы и цифры.</p>
             </div>
 
                   <div className="input-username">

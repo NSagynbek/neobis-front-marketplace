@@ -25,17 +25,6 @@ import ProfileDetails from "./components/ProfileDetails";
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 function App() {
   
   useEffect(() => {

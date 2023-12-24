@@ -45,7 +45,8 @@ function Mobilemodal ({handleClick}){
         }
         handleClick()
         dispatch(toggleSms())
-        // const response = await addPhoneNumber(formData)
+        const response = await addPhoneNumber(formData)
+        localStorage.setItem("phoneNumber",formData.phoneNumber)
     }
 
     const closeWindow = ()=>{

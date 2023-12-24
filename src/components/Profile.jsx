@@ -13,7 +13,7 @@ import MyProducts from "./MyProducts";
 import Exit from "../modalWindows/Exit";
 import ProfileDetails from "./ProfileDetails";
 import LikedProducts from "./LikedProducts"
-import axios from "axios";
+import { getMyItems } from "../api";
 
 
 
@@ -47,11 +47,13 @@ function Profile(){
     },[])
 
      
+const getMyProducts = async ()=>{
+  setSelectedCategory("myProducts")
+  const response = await getMyItems()
+  console.log(response)
+  
+}
 
-
-    function onSubmit(values){
-        console.log(values)
-    }
 
 
 
@@ -94,7 +96,7 @@ function Profile(){
                      
                 </div>
                 <div className="products"
-                onClick={()=>setSelectedCategory("myProducts")}
+                onClick={getMyProducts}
                 >
                     <img src={shop} alt={shop} className="products__img" />
                     <p className="profile-texts">Мои товары</p>                   
@@ -138,7 +140,7 @@ function Profile(){
                    </NavLink>
                  </label>
 
-             <p className='profile-header-text' onClick={test}>Профиль</p>
+             <p className='profile-header-text'>Профиль</p>
 
 
             </div>

@@ -8,8 +8,6 @@ import productDetailsView from "../modalWindows/ProductDetailsView"
 
 
 
-
-
 function LikedProducts(){
 
   const [view,setView] = useState(false);
@@ -20,7 +18,7 @@ useEffect(()=>{
     console.log(response)
 
   }
-  // getLikedProducts();
+   getLikedProducts();
 
 },[])
 

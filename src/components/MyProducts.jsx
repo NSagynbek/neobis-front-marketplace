@@ -7,10 +7,6 @@ import { useEffect,useState } from 'react';
 import { getMyItems } from '../api';
 
 
-
-
-
-
 function MyProducts(){
 
   const [more,setMore] = useState(false)
@@ -22,7 +18,7 @@ function MyProducts(){
       console.log(response)
   
     }
-    // getMyProducts();
+     getMyProducts();
   
   },[])
 

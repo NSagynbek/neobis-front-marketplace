@@ -28,6 +28,7 @@ function Codemodal(){
     const [seconds,setSeconds]=useState(60);
     const [loading, setLoading] = useState(true);
     const [codeValue, setCodeValue] = useState("");
+    const [wrongCode, setWrongCode] = useState(false);
 
   useEffect(()=>{
     const timer = setInterval(()=>{
@@ -48,12 +49,21 @@ function Codemodal(){
     
     if (code.length === 4) {
         try{
-          const response = await codeConfirmation(code)
-         
+          const formDada = {
+            username:localStorage.getItem("username"),
+            phoneNumber:localStorage.getItem("phoneNumber"),
+            code:code
+          }
+          
+          const response = await codeConfirmation(formDada)
+          console.log("code response",response)
+          dispatch(toggleSms())
         }catch(error){
           console.log(error)
+          setWrongCode(!wrongCode);
+
         }
-        dispatch(toggleSms())
+        
         
          
       }
@@ -95,12 +105,15 @@ function Codemodal(){
                  <div className="send-again-container">
                     
                  <button 
-                 type="submit" 
-                 className={completed?"send-again-container-btn-active":"send-again-container-btn"}
-                 disabled={!completed}
-                 onClick={onSubmit}
+                   type="submit" 
+                   className={completed?"send-again-container-btn-active":"send-again-container-btn"}
+                   disabled={!completed}
+                   onClick={onSubmit}
                  >
-                    Отправить код еще раз</button> 
+                   Отправить код еще раз
+                 </button> 
+                 <p className="wrong-code"> {wrongCode?"Неверный код":""} </p>
+
                     <div className="loader">
                     <PuffLoader
                       color={"gray"}

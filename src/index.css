@@ -1053,3 +1053,9 @@ cursor: pointer;
   border-radius: 80%;
   object-fit: cover;
 }
+
+.wrong-code{
+  font-weight: 500px;
+  font-size: 17px;
+  color: #F34545;
+}

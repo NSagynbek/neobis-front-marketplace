@@ -134,6 +134,7 @@ return(
               name="email"
               id="email"
               placeholder="почта"
+              readOnly
              />
 
            </>
