@@ -4,3 +4,4 @@ export const FETCHING_DATA = "FETCHING_DATA"
 export const TOGGLE_SMS = "TOGGLE_MODAL";
 export const USERNAME_PASSWORD = "USERNAME_PASSWORD";
 export const REFRESH_TOKEN = "REFRESH_TOKEN"
+export const LIKE = "LIKE";

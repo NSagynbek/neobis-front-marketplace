@@ -6,15 +6,12 @@ import * as yup from "yup"
 import {useDispatch } from "react-redux"
 import { toggleSms } from "../redux";
 import { addPhoneNumber } from "../api";
-import axios from "axios";
+
 
 
 const initialValues = {
     number:"",
 }
-
-
-
 
 const validationSchema = yup.object().shape({
     number: yup
@@ -30,12 +27,9 @@ const validationSchema = yup.object().shape({
   });
 
 
-
 function Mobilemodal ({handleClick}){
 
-
    const dispatch = useDispatch()
-
 
     async function onSubmit (values){
         let user = localStorage.getItem("username");
@@ -45,15 +39,18 @@ function Mobilemodal ({handleClick}){
         }
         handleClick()
         dispatch(toggleSms())
-        const response = await addPhoneNumber(formData)
-        localStorage.setItem("phoneNumber",formData.phoneNumber)
+        try{
+            const response = await addPhoneNumber(formData)
+            localStorage.setItem("phoneNumber",formData.phoneNumber)
+        }catch(error){
+            console.log(error)
+        }
+       
     }
 
     const closeWindow = ()=>{
         handleClick()
     }
-
-
 
     return (
         <div className="mobile-modal-overlay">
@@ -100,9 +97,7 @@ function Mobilemodal ({handleClick}){
 
             </Formik>
 
-
             </div>
-
 
             </div>
 

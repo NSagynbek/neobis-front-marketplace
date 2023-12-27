@@ -1,10 +1,11 @@
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { IconButton } from '@mui/material';
+import { deleteMyProduct } from '../api';
 
 function Delete({handleDelete}) {
 
-  const handleDeleteClick = () => {
-    
+  const handleDeleteClick = async (id) => {
+    //const response = await deleteMyProduct(id)
   };
 
   const handleCancel = ()=>{

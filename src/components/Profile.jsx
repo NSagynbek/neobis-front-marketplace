@@ -13,7 +13,7 @@ import MyProducts from "./MyProducts";
 import Exit from "../modalWindows/Exit";
 import ProfileDetails from "./ProfileDetails";
 import LikedProducts from "./LikedProducts"
-import { getMyItems } from "../api";
+import { getMyItems,getLikedItems } from "../api";
 
 
 
@@ -22,6 +22,7 @@ function Profile(){
 
  const [username, setUsername] = useState("");
  const [name, setName] = useState("");
+ const [userImage,setUserImage] = useState(null);
  const [selectedCategory, setSelectedCategory] = useState('profile');
  const [exit,setExit] = useState(false);
 
@@ -34,6 +35,7 @@ function Profile(){
             const response = await getProfileDetails();
             setUsername(response.username)
             setName(response.firstname)
+            setUserImage(response.imageUrl)
 
         } catch(error){
             console.log(error.response.status)
@@ -54,7 +56,11 @@ const getMyProducts = async ()=>{
   
 }
 
-
+const getMyLikedProducts = async ()=>{
+  setSelectedCategory("lekedProducts")
+  const response = await getLikedItems()
+  console.log(response)
+}
 
 
    
@@ -68,9 +74,10 @@ const getMyProducts = async ()=>{
             <div className="profile-details">
                 <div className="user-info-container">
                     <img 
-                    src={userImagePlaceholder} 
+                    src={userImage?userImage:userImagePlaceholder} 
                     alt={userImagePlaceholder} 
                     onClick={()=>setSelectedCategory("profile")}
+                    className="user-info-container__img"
                     />
                     <div className="user-info">
                     <p className="user-info__name"
@@ -84,7 +91,7 @@ const getMyProducts = async ()=>{
                 </div>
 
                 <div className="liked-products" 
-                onClick={()=>setSelectedCategory("lekedProducts")}
+                onClick={getMyLikedProducts}
                 >
                     <img src={heart} alt={heart} className="liked-products__img" />
                     <p className="profile-texts">Понравившиеся </p>         
@@ -131,17 +138,20 @@ const getMyProducts = async ()=>{
             <div className='password-form__header'>
 
                  <label htmlFor="backBtn" className='backBtn-label'>
-                   <NavLink id='backBtn' className="backBtn-text" name="backBtn" to="/password">Назад</NavLink>
+                   <NavLink id='backBtn' className="backBtn-text" name="backBtn" to="/main">Назад</NavLink>
 
-                   <NavLink to="/password"  id='backBtn' className="backBtn-Icon">
+                   <NavLink to="/main"  id='backBtn' className="backBtn-Icon">
                      <IconButton edge="start" >
                        <KeyboardBackspaceIcon/>
                      </IconButton>
                    </NavLink>
                  </label>
 
-             <p className='profile-header-text'>Профиль</p>
-
+             
+            
+              {selectedCategory === 'profile' && <p className='profile-header-text'>Профиль</p>}
+              {selectedCategory === 'myProducts' && <p className='profile-header-text'>Мои товары</p>}
+              {selectedCategory === 'lekedProducts' && <p className='profile-header-text'>Понравившиеся</p>}
 
             </div>
 

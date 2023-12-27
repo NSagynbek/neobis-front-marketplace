@@ -5,6 +5,8 @@ import debounce from "lodash/debounce";
 import {useDispatch } from "react-redux"
 import { toggleSms } from "../redux";
 import { codeConfirmation } from "../api";
+import CloseIcon from '@mui/icons-material/Close';
+import { IconButton,InputAdornment } from "@mui/material";
 
 
 const override ={
@@ -29,6 +31,7 @@ function Codemodal(){
     const [loading, setLoading] = useState(true);
     const [codeValue, setCodeValue] = useState("");
     const [wrongCode, setWrongCode] = useState(false);
+    
 
   useEffect(()=>{
     const timer = setInterval(()=>{
@@ -52,10 +55,9 @@ function Codemodal(){
           const formDada = {
             username:localStorage.getItem("username"),
             phoneNumber:localStorage.getItem("phoneNumber"),
-            code:code
           }
           
-          const response = await codeConfirmation(formDada)
+          const response = await codeConfirmation(code,formDada)
           console.log("code response",response)
           dispatch(toggleSms())
         }catch(error){
@@ -84,9 +86,22 @@ function Codemodal(){
         
 
     }
+
+    const closeWindow = ()=>{
+      dispatch(toggleSms())
+    }
     return (
         <div className="mobile-modal-overlay">
             <div className="code-modal">
+              <InputAdornment
+                position="end"
+                className="mobile-modal__close"
+                onClick={closeWindow}
+              >
+                <IconButton edge="end">
+                  <CloseIcon/>
+                </IconButton>
+              </InputAdornment>
                 <p className="code-modal__heading">Изменить номер телефона</p>
                 <div className="code-modal__img-container">
                 <img src={placeholder} alt={placeholder} />

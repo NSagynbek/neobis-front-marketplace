@@ -5,7 +5,9 @@ import MyProducts from "./MyProducts"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AddProduct from "../modalWindows/AddProduct";
-
+import { getProfileDetails } from "../api";
+import { useEffect,useState } from "react";
+import { getProducts } from "../api";
 
 const notify = ()=>{
     toast.success('Товар добавлен!', {
@@ -20,33 +22,70 @@ const notify = ()=>{
         });
   }
 
+
+
+
 function MainPage (){
 
-    notify()
+const [userDetails,setUserDetails] = useState({});
+const [closeWindow,setCloseWindow] = useState(false);
+console.log(userDetails)
 
-    const products = Array.from({ length: 50 }, (_, index) => <MyProducts key={index} />);
+    useEffect(()=>{
+        const getUserProfileDetails = async ()=>{
+        try{
+        const userDetails = await getProfileDetails()
+        setUserDetails({...userDetails})
+
+        const products = await getProducts()
+        console.log(products)
+        
+         }catch(error){
+          console.log(error)
+         }
+            
+     }
+       getUserProfileDetails()
+    },[])
+
+    const handleClick = ()=>{
+        setCloseWindow(!closeWindow)
+    }
+
+    // notify()
+
+    
 
     return (
         <div className="main-page-container">
-            <AddProduct/>
+            {closeWindow?<AddProduct handleClick={handleClick}/>:""}
 
             <header className="main-header">
                 <div className="main-header__image-container">
                     <img src={logo} alt={logo} />
                 </div>
 
-                <button className="main-header__btn">Подать обьявление</button>
+                <button 
+                className="main-header__btn"
+                onClick={handleClick}
+                >
+                    Подать обьявление
+                </button>
 
                 <div className="main-user">
                     <div className="main-user-detais">
                         <NavLink to="/profile" className="main-header__link">
-                        <p className="user-info__name">Name</p>
-                        <p className="user-info__username" >username</p>
+                        <p className="user-info__name">{userDetails.firstname}</p>
+                        <p className="user-info__username" >{userDetails.username}</p>
                         </NavLink>
                     </div>
                     <div className="main-user__image">
                         <NavLink to="/profile" className="main-header__link">
-                        <img src={userImagePlaceholder} alt={userImagePlaceholder} />
+                        <img 
+                        src={userDetails?userDetails.imageUrl:userImagePlaceholder} 
+                        alt={userImagePlaceholder}
+                        className="user-info-container__img"
+                         />
                         </NavLink>
                     </div>
                 </div>
@@ -54,7 +93,7 @@ function MainPage (){
             </header>
 
             <div className="content-container">
-           {products}               
+           //content here              
 
             </div>
             <ToastContainer/>

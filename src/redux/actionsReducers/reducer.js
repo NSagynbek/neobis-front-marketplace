@@ -5,6 +5,7 @@ import {
   TOGGLE_SMS,
   USERNAME_PASSWORD,
   REFRESH_TOKEN,
+  LIKE,
 } from "./actionTypes";
 
 const initialState = {
@@ -16,6 +17,7 @@ const initialState = {
     email:"",
   },
   username:"",
+  isLiked:false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -62,7 +64,11 @@ const reducer = (state = initialState, action) => {
           username:action.payload
         }  
 
-    
+      case LIKE:
+        return {
+          ...state,
+          isLiked:!state.isLiked
+        }
 
       
     default:

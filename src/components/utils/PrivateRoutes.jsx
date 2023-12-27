@@ -6,11 +6,13 @@ const PrivateRoutes = () => {
 
     return (
         <div>
-            <h1>Private Router</h1>
             {isAuthenticated ? <Outlet /> : <Navigate to="/" />}
         </div>
     )
 };
+
+
+
 
 function saveUser(user) {
     let users = [];

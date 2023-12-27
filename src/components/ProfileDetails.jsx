@@ -4,7 +4,7 @@ import { useState,useEffect } from "react"
 import Mobilemodal from "../modalWindows/Mobilemodal";
 import Codemodal from "../modalWindows/Codemodal";
 import { useSelector} from "react-redux"
-import { getProfileDetails,updateProfileDetails } from "../api";
+import { getProfileDetails,updateProfileDetails,updateProfileImage } from "../api";
 
 
 
@@ -25,6 +25,8 @@ function ProfileDetails (){
   const smsCode = useSelector(state => state.smsCode)
   const [formValues, setFormValues] = useState(initialValues);
   const [fieldValue, setFieldValue] = useState(null)
+  const [userImage,setUserImage] = useState(null);
+  const [userMobile, setUserMobile] = useState("");
 
   useEffect(()=>{
     const getUserProfileDetails = async ()=>{
@@ -36,6 +38,8 @@ function ProfileDetails (){
       birthday: res.birthday || '',
       email: res.email || '',
     });
+    setUserImage(res.imageUrl)
+    setUserMobile(res.phoneNumber)
       console.log(res)
      }catch(error){
       console.log(error)
@@ -71,9 +75,20 @@ const toggleSaveEditMode = ()=>{
  setEditMode(!editMode)
 }   
 
-function handleChange (event){   
- setFieldValue(event.target.files[0]);
+async function handleChange (event){   
+  setFieldValue(event.target.files[0]);
 }
+
+useEffect(()=>{
+  const updateImage = async ()=>{
+    const formData = new FormData()
+    formData.append("multipartFile", fieldValue)
+    const res = await updateProfileImage(formData)
+    console.log(res)
+  }
+  updateImage()
+
+},[fieldValue])
 
 
 return(
@@ -84,7 +99,7 @@ return(
   <div className="avatar">
    <label htmlFor="avatar" className="avatar-label">
     <img
-      src={fieldValue ? URL.createObjectURL(fieldValue) : avatar}
+      src={fieldValue?URL.createObjectURL(fieldValue):userImage}
       alt={avatar}
       className="avatar__img"
      />
@@ -187,7 +202,7 @@ return(
              >
                Добавить номер
              </button>
-             <p className="mobile__text">0(000) 000 000</p>
+             <p className="mobile__text">{userMobile?userMobile:"0(000) 000 000"}</p>
            </div>
          </div>
 

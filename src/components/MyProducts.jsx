@@ -5,9 +5,13 @@ import cardImage from "../assets/cardImage.png"
 import EditDelete from '../modalWindows/EditDelete';
 import { useEffect,useState } from 'react';
 import { getMyItems } from '../api';
-
+import { like } from '../api';
+import { useDispatch,useSelector } from 'react-redux';
+import {toggleIsLiked} from "../redux"
 
 function MyProducts(){
+  const isLiked = useSelector(state => state.isLiked)
+  const dispatch = useDispatch();
 
   const [more,setMore] = useState(false)
   
@@ -22,12 +26,23 @@ function MyProducts(){
   
   },[])
 
+const likeProduct = async (id)=>{
+  try{
+    const res = await like(id)
+    console.log(res)
+    dispatch(toggleIsLiked())
+  }catch(error){
+    console.log(error)
+  }
+  
+}  
+
 
   const handleClick = ()=>{
     setMore(!more)
   }
 
-
+let id = 2;
 
     return (
           <div className='my-product'>
@@ -42,10 +57,14 @@ function MyProducts(){
             </div>
 
             <div className='my-product__icons-container'>
-            <InputAdornment id="heart-icon"  position="start">
+            <InputAdornment 
+            id="heart-icon"  
+            position="start"
+            onClick={()=>likeProduct(id)}
+            >
               <IconButton edge="start"  >
-                <FavoriteIcon/>
-              </IconButton>
+                <FavoriteIcon style={{color:isLiked?"red":""}}/>
+              </IconButton >
             </InputAdornment>
                 <p className='my-product__likes'>100</p>
 

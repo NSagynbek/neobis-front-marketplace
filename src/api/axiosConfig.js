@@ -6,6 +6,7 @@ import axios from 'axios';
     baseURL: 'https://mobi-market-production.up.railway.app/',
     headers: {
       'Content-Type': 'application/json',
+      "Custom-Header":"value",
     },
   });
 

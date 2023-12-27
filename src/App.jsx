@@ -40,26 +40,23 @@ function App() {
         <Route path="/" element={<RootLayout/>}>
           
       <Route element={<PrivateRoutes/>}>       
-        {/* <Route path="/welcomback" element={<WelcomeBack />} />      
-        <Route path="/welcom" element={<Welcom />} /> */}
+        <Route path="/profile" element={<Profile/>} />
+        <Route path="/main" element={<MainPage/>} />
+        <Route path="/phone" element={<Mobilemodal/>} />
+        <Route path="/code" element={<Codemodal/>} />
+        <Route path="/product" element={<MyProducts/>} />
+        <Route path="/edit" element={<EditDelete/>} />
+        <Route path="/view" element={<ProductDetaisView/>} />
+        <Route path="/delete" element={<Delete/>} />
+        <Route path="/exit" element={<Exit/>} />       
+        <Route path="/add" element={<AddProduct/>} />
+        <Route path="/liked" element={<LikedProducts/>} />
+        <Route path="/details" element={<ProfileDetails/>} />
       </Route>
+
        <Route path="/" element={<Login />} />
        <Route path="/signup" element={<Signup/>} />
-       <Route path="/password" element={<Password/>} />
-       <Route path="/profile" element={<Profile/>} />
-       <Route path="/phone" element={<Mobilemodal/>} />
-       <Route path="/code" element={<Codemodal/>} />
-       <Route path="/product" element={<MyProducts/>} />
-       <Route path="/edit" element={<EditDelete/>} />
-       <Route path="/view" element={<ProductDetaisView/>} />
-       <Route path="/delete" element={<Delete/>} />
-       <Route path="/exit" element={<Exit/>} />
-       <Route path="/main" element={<MainPage/>} />
-       <Route path="/add" element={<AddProduct/>} />
-       <Route path="/liked" element={<LikedProducts/>} />
-       <Route path="/details" element={<ProfileDetails/>} />
-      
-
+       <Route path="/password" element={<Password/>} />      
         </Route>
 
         

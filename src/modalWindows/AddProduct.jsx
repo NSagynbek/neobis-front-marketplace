@@ -5,12 +5,12 @@ import * as yup from "yup"
 import TextError from "../components/TextError";
 import CloseIcon from '@mui/icons-material/Close';
 import { IconButton,InputAdornment} from '@mui/material';
-
-
+import { addProduct,addProductImages } from "../api";
+import axios from "axios";
 
 const validationSchema = yup.object({
     price: yup.string().required("пожалуйста, укажите цену"),
-    title: yup.string().required("пожалуйста, укажите названия"),
+    name: yup.string().required("пожалуйста, укажите названия"),
     shortDescription: yup.string().required("пожалуйста, напишите краткое описание"),
     fullDescription: yup.string().required("напишите пожалуйста полное описание"),
 })
@@ -19,36 +19,53 @@ const validationSchema = yup.object({
 
 const initialValues = {
     price:"",
-    title:"",
+    name:"",
     shortDescription:"",
     fullDescription:"",
 }
 
-function AddProduct(){
+function AddProduct({handleClick}){
 
    
-const [fieldValue, setFieldValue] = useState([])
+const [fieldValue, setFieldValue] = useState(null)
 
 
 async function handleSubmit  (values){
  const formData = new FormData();
  formData.append('price', values.price);
- formData.append('title', values.title);
- formData.append('description', values.shortDescription);
+ formData.append('name', values.name);
+ formData.append('shortDescription', values.shortDescription);
  formData.append('fullDescription', values.fullDescription);
-fieldValue.forEach((file, index) => {
-  formData.append(`file-${index}`, file);
-});
 
-const response = await addProduct(formData);
+ if(!fieldValue){
+  console.log("file not selected!")
+  return 
+ }
+ const imagesFormData = new FormData();
+ imagesFormData.append("file",fieldValue);
+ 
+
+try{
+  const response = await addProduct(formData);
+  console.log(response)
+ 
+  let id = 1
+  const res = await addProductImages(id,imagesFormData)
+  console.log(res)
+} catch(error){
+  console.log(error)
+}
+ 
+
+
 
 }
 
-function handleChange (event){
-  const files = Array.from(event.target.files);
-  setFieldValue((prev) => [...prev, ...files]);
-}
 
+
+const closeWindow = ()=>{
+  handleClick()
+}
 
  
     return (
@@ -56,7 +73,11 @@ function handleChange (event){
 
             <div className="add-product-card">
 
-            <InputAdornment position="end" className="add-product-card-close-icon">
+            <InputAdornment 
+              position="end" 
+              className="add-product-card-close-icon"
+              onClick={closeWindow}
+              >
             <IconButton edge="end"  >
                 <CloseIcon  />
             </IconButton>
@@ -70,18 +91,18 @@ function handleChange (event){
                 name="file"
                 type="file"
                 id="file-upload"
-                multiple
-                onChange={handleChange}
+                onChange={(e)=>{setFieldValue(e.target.files[0])}}
                 />
                 <div className="image-container">
-                {fieldValue.length>0&&fieldValue.map((el,index)=>{
-                  return <img
-                  key={index}
-                  src={URL.createObjectURL(el)}
-                  alt={`Uploaded ${el.name}`} 
+                
+                {fieldValue&&(
+                  <img
+                  src={URL.createObjectURL(fieldValue)}
+                  alt={`Uploaded ${fieldValue.name}`} 
                 />
+                )} 
 
-                 })}
+                 
                 </div>
 
              </label>
@@ -105,12 +126,12 @@ function handleChange (event){
 
                             <Field
                             type="text"
-                            name="title"
+                            name="name"
                             placeholder="Название"
                             className="title-field"
                             />
 
-                            <ErrorMessage name="title" component={TextError}/>
+                            <ErrorMessage name="name" component={TextError}/>
 
                             <Field
                             as="textarea"

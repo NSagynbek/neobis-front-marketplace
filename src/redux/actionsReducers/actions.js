@@ -1,4 +1,4 @@
-import { LOGIN_SUCCESS, REFRESH_TOKEN, TOGGLE_SMS} from "./actionTypes"
+import { LIKE, LOGIN_SUCCESS, REFRESH_TOKEN, TOGGLE_SMS} from "./actionTypes"
 import { SIGNUP_SUCCESS}from "./actionTypes"
 import {USERNAME_PASSWORD} from "./actionTypes"
 
@@ -35,6 +35,12 @@ export const loginSuccess = (jwt) => {
     return {
       type: REFRESH_TOKEN,
       payload: data,
+    }
+  }
+
+  export const toggleIsLiked = ()=>{
+    return {
+      type:LIKE,
     }
   }
 

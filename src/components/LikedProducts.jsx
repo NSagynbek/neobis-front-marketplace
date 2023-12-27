@@ -3,7 +3,6 @@ import {IconButton,InputAdornment} from '@mui/material';
 import cardImage from "../assets/cardImage.png"
 import EditDelete from '../modalWindows/EditDelete';
 import { useState,useEffect } from 'react';
-import { getLikedItems } from '../api';
 import productDetailsView from "../modalWindows/ProductDetailsView"
 
 
@@ -12,15 +11,6 @@ function LikedProducts(){
 
   const [view,setView] = useState(false);
 
-useEffect(()=>{
-  const getLikedProducts = async ()=>{
-    const response = await getLikedItems()
-    console.log(response)
-
-  }
-   getLikedProducts();
-
-},[])
 
 const handleClick = ()=>{
   setView(!view)

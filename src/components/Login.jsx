@@ -61,7 +61,7 @@ const  onSubmit = async (values)=>{
              localStorage.setItem('username', values.username);
             dispatch(loginSuccess())
             dispatch(tokenRefresh(values.username))
-            navigate("/profile")
+            navigate("/main")
             console.log(response.accessToken)
 
         } catch(error){
