@@ -4,69 +4,74 @@ import {IconButton,InputAdornment} from '@mui/material';
 import cardImage from "../assets/cardImage.png"
 import EditDelete from '../modalWindows/EditDelete';
 import { useEffect,useState } from 'react';
-import { getMyItems } from '../api';
 import { like } from '../api';
-import { useDispatch,useSelector } from 'react-redux';
-import {toggleIsLiked} from "../redux"
 
-function MyProducts(){
-  const isLiked = useSelector(state => state.isLiked)
-  const dispatch = useDispatch();
 
-  const [more,setMore] = useState(false)
-  
+function MyProducts({key,products}){
+
+  const image = products.images.map((el)=>{
+    if(el.imageUrl){
+      return el.imageUrl
+    } else{
+      return ""
+    }
+  })
+console.log(image)
+console.log(products)
+
+  const [more,setMore] = useState(false);
+  const [isLiked,setIsLiked] = useState(false);
 
   useEffect(()=>{
-    const getMyProducts = async ()=>{
-      const response = await getMyItems()
-      console.log(response)
+   setIsLiked(products.likes>0)
   
-    }
-     getMyProducts();
-  
-  },[])
+  },[products.likes])
+
 
 const likeProduct = async (id)=>{
+
   try{
     const res = await like(id)
-    console.log(res)
-    dispatch(toggleIsLiked())
+    setIsLiked((prevIsLiked) => !prevIsLiked)
+
   }catch(error){
     console.log(error)
   }
   
 }  
 
+const handleClick = ()=>{
+  setMore(!more)
+}
 
-  const handleClick = ()=>{
-    setMore(!more)
-  }
 
-let id = 2;
 
-    return (
-          <div className='my-product'>
+return (
+          <div key={key} className='my-product'>
           
             <div className='my-product__image-container'>
-                <img className='my-product__image' src={cardImage} alt={cardImage} />
+                <img 
+                className='my-product__image' 
+                src={image[0]?image[0]:cardImage} 
+                alt={image[0]} />
             </div>
 
             <div className='my-product__text-container'>
-            <p className='my-product__title'>BMW M4 Coupe: A Two-Door</p>
-            <p className='my-product__price'>23 000 $</p>
+            <p className='my-product__title'>{products.name}</p>
+            <p className='my-product__price'>{products.price} Сом</p>
             </div>
 
             <div className='my-product__icons-container'>
             <InputAdornment 
             id="heart-icon"  
             position="start"
-            onClick={()=>likeProduct(id)}
+            onClick={()=>likeProduct(products.id)}
             >
               <IconButton edge="start"  >
                 <FavoriteIcon style={{color:isLiked?"red":""}}/>
               </IconButton >
             </InputAdornment>
-                <p className='my-product__likes'>100</p>
+                <p className='my-product__likes'>{products.likes}</p>
 
             <InputAdornment 
             id="more-icon"  
@@ -77,7 +82,7 @@ let id = 2;
                 <MoreVertIcon/>
               </IconButton>
             </InputAdornment>
-            {more?<EditDelete setMore={setMore} />:""}
+            {more?<EditDelete setMore={setMore} products={products} />:""}
             </div>
 
 

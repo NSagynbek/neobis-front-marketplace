@@ -6,7 +6,7 @@ import ProductDetails from "./ProductDetails"
 import Delete from "./Delete"
 
 
-function EditDelete({setMore}){
+function EditDelete({setMore,products}){
 
 const [deleteProduct,setDeleteProduct] = useState(false);
 const [editProduct,setEditProduct] = useState(false);
@@ -54,8 +54,8 @@ const handleEdit =  ()=>{
             </InputAdornment>
                 <p  className='delete-text' id='delete-icon'>Удалить</p>
           </label>
-                 {deleteProduct?<Delete handleDelete={handleDelete}/>:""} 
-                 {editProduct?<ProductDetails handleEdit={handleEdit} />:""} 
+                 {deleteProduct?<Delete handleDelete={handleDelete} products={products}/>:""} 
+                 {editProduct?<ProductDetails handleEdit={handleEdit} products={products} />:""} 
         </div>
     )
 }

@@ -2,17 +2,35 @@ import shoes from "../assets/shoes.png"
 import CloseIcon from '@mui/icons-material/Close';
 import { IconButton, InputAdornment } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import { useEffect,useState } from "react";
+import { getProductById } from "../api";
 
+function ProductDetaisView ({products,handleClick}){
+    const [details,setDetails] = useState("")
+    
+ useEffect(()=>{
+    const getProduct = async ()=>{
+        const res = await getProductById(products.id)
+        console.log(res)
+        setDetails(res)
+    }
+    getProduct()
 
-function ProductDetaisView (){
+ },[])
 
- 
+const closeWindow = ()=>{
+    handleClick()
+}
 
     return (
-        <div className="mobile-modal-overlay">
+        <div className="mobile-modal-overlayy">
         <div className="details-card"> 
 
-        <InputAdornment position="end" className="details-card__icon">
+        <InputAdornment 
+        position="end" 
+        className="details-card__icon"
+        onClick={closeWindow}
+        >
             <IconButton edge="end">
                 <CloseIcon/>
             </IconButton>
@@ -23,21 +41,24 @@ function ProductDetaisView (){
             </div>
 
             <div className="details-form-container" >
-                <p className="view-price">12000 сом</p>
+                <p className="view-price">{details.price} сом</p>
 
                 <div className="view-likes-container">
-                <InputAdornment id="view-heart-icon"  position="start">
+                <InputAdornment 
+                id="view-heart-icon"  
+                position="start"
+                >
                   <IconButton edge="start"  >
                     <FavoriteIcon/>
                   </IconButton>
                </InputAdornment>
-                    <p className="view-text">Нравится: 1 M</p>
+                    <p className="view-text">Нравится:{details.likes}</p>
                 </div>
 
-                <p className="view-title">Adidas Yeezy 500</p>
-                <p className="view-text">The Yeezy 500 Blush is a limited edition shoe designed by Kanye West for Adidas</p>
+                <p className="view-title">{details.name}</p>
+                <p className="view-text">{details.shortDescription}</p>
                 <p className="view-description">Детальное описание</p>
-                <p className="view-text">It features a unique design, with a chunky silhouette and a blush colorway. The shoe has a mix of suede, mesh and leather, and it's considered a highly sought-after item among shoe enthusiasts.</p>
+                <p className="view-text">{details.fullDescription}</p>
 
                 
             </div>

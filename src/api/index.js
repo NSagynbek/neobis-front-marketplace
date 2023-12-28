@@ -1,4 +1,5 @@
 import instance from "./axiosConfig"
+import muliPartinstance from "./axiosConfigMuliPart"
 
 export const login = async (data)=>{
     const res = await instance.post("api/v1/auth/login",data)
@@ -22,8 +23,8 @@ export const codeConfirmation = async (code,formData)=>{
  }
 
 
-export const getProfileDetails = async ()=>{
-    const res = await instance.get("api/v1/users/getUserById/1")
+export const getProfileDetails = async (username)=>{
+    const res = await instance.get(`api/v1/users/getUserByUsername?username=${username}`)
     return res.data
 }
 
@@ -54,9 +55,7 @@ export const addProduct = async (product)=>{
 }
 
 export const addProductImages = async (id,images)=>{
-    const res = await instance.post(`api/v1/products/updateProductImages?id=${id}`,images,{
-        onUploadProgress:(progressEvent)=>{console.log(progressEvent.progress*100)},
-    })
+    const res = await muliPartinstance.post(`api/v1/products/updateProductImages/${id}`,images)
     return res.data
 }
 
@@ -71,7 +70,17 @@ export const like = async (id) => {
 }
 
 export const updateProfileImage = async (formData) => {
-    const res = await instance.post("api/v1/users/updatePhoto",formData);
+    const res = await muliPartinstance.post("api/v1/users/updatePhoto",formData);
+    return res.data;
+}
+
+export const getProductById = async (id) => {
+    const res = await instance.get(`api/v1/products/getProduct/${id}`);
+    return res.data;
+}
+
+export const updateProductDetails = async (id,formData) => {
+    const res = await instance.put(`api/v1/products/updateProduct/${id}`,formData);
     return res.data;
 }
 

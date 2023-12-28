@@ -3,47 +3,66 @@ import shoes from "../assets/shoes.png"
 import CloseIcon from '@mui/icons-material/Close';
 import { IconButton, InputAdornment } from '@mui/material';
 import { useState,useEffect } from "react";
-import instance from "../api/axiosConfig";
-import convertBase64 from "../components/utils";
+import { updateProductDetails,getProductById  } from "../api";
+import { useDispatch } from "react-redux";
+import { toggleRerender } from "../redux";
 
-const initialValues = {
-    price:"",
-    name:"",
-    shortDescription:"",
-    fullDescription:"",
+
+function ProductDetais ({handleEdit,products}){
+
+  console.log("From edit product",products)
+  const dispatch = useDispatch();
+  const [prefillData,setPrefillData] = useState("");
+  const [fieldValue,setFieldValue] = useState(null) 
+  console.log(prefillData)
+
+  useEffect(()=>{
+    const prefill = async ()=>{
+      const res = await getProductById (products.id)
+      setPrefillData(res)
+
+    }
+    prefill()
+  },[])
+
+  const initialValues = {
+    price:prefillData.price||"",
+    name:prefillData.name||"",
+    shortDescription:prefillData.shortDescription||"",
+    fullDescription:prefillData.fullDescription||"",
 }
 
-function ProductDetais ({handleEdit}){
-
-const [fieldValue,setFieldValue] = useState([])   
- 
-async function onSubmit (values){
-  let formData = new FormData();
-  formData.append('price', values.price);
-  formData.append('name', values.name);
-  formData.append('shortDescription', values.shortDescription);
-  formData.append('fullDescription', values.fullDescription);
-  formData.append('images',fieldValue);
-  for (let pair of formData) {
-    console.log(pair[0], pair[1]);
-  }
- 
-  try{
-    const res = await instance.put(`api/v1/products/updateProduct/${1}`,formData)
-    console.log(res)
-  }catch(error){
-    console.log(error)
-  }
   
-}
+
+
+ 
+  async function onSubmit (values){
+
+    let formData = new FormData();
+
+    formData.append('price', values.price);
+    formData.append('name', values.name);
+    formData.append('shortDescription', values.shortDescription);
+    formData.append('fullDescription', values.fullDescription);
+    let id = products.id
+    try{
+      const res = await updateProductDetails(id,formData)
+      dispatch(toggleRerender());
+      handleEdit()
+      console.log(res)
+    }catch(error){
+      console.log(error)
+    }
+    
+  }
 
 const handleClick = ()=>{
   handleEdit()
 }
 
 function handleChange (event){
-  const files = Array.from(event.target.files);
-  setFieldValue((prev) => [...prev, ...files]);
+  const files = (event.target.files[0]);
+  setFieldValue(files);
 }
 
   
@@ -66,18 +85,13 @@ function handleChange (event){
        
             <div className="details-card__image-container">
             <label htmlFor="edit-product-image">
-  {fieldValue.length > 0 ? (
-    fieldValue.map((el, index) => (
-      <img
-        key={index}
-        src={URL.createObjectURL(el)}
-        alt={`Uploaded ${el.name}`} 
-        className="details-card__image"
-      />
-    ))
-  ) : (
-    <img src={shoes} alt={shoes} className="details-card__image" />
-  )}
+  
+    <img 
+    src={fieldValue?URL.createObjectURL(fieldValue):products.images[0].imageUrl} 
+    alt={shoes} 
+    className="details-card__image" 
+    />
+  
   <input 
     type="file"
     id="edit-product-image"
@@ -90,6 +104,7 @@ function handleChange (event){
             </div>
 
             <div >
+              {prefillData&&(
                 <Formik
                 initialValues={initialValues}
                 onSubmit={onSubmit}
@@ -135,6 +150,7 @@ function handleChange (event){
                    )}
 
                 </Formik>
+                )}
 
                 
             </div>

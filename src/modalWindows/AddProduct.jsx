@@ -6,7 +6,8 @@ import TextError from "../components/TextError";
 import CloseIcon from '@mui/icons-material/Close';
 import { IconButton,InputAdornment} from '@mui/material';
 import { addProduct,addProductImages } from "../api";
-import axios from "axios";
+import { useDispatch } from "react-redux";
+import { toggleIsDelete } from "../redux";
 
 const validationSchema = yup.object({
     price: yup.string().required("пожалуйста, укажите цену"),
@@ -24,13 +25,14 @@ const initialValues = {
     fullDescription:"",
 }
 
-function AddProduct({handleClick}){
+function AddProduct({handleClick,notify}){
 
-   
+const dispatch = useDispatch();  
 const [fieldValue, setFieldValue] = useState(null)
 
 
 async function handleSubmit  (values){
+
  const formData = new FormData();
  formData.append('price', values.price);
  formData.append('name', values.name);
@@ -41,15 +43,20 @@ async function handleSubmit  (values){
   console.log("file not selected!")
   return 
  }
+
  const imagesFormData = new FormData();
- imagesFormData.append("file",fieldValue);
+ imagesFormData.append("multipartFiles",fieldValue);
+
  
 
 try{
   const response = await addProduct(formData);
-  console.log(response)
- 
-  let id = 1
+  dispatch(toggleIsDelete());
+  notify(values.name);
+  handleClick()
+  
+  const id = response.id;
+   
   const res = await addProductImages(id,imagesFormData)
   console.log(res)
 } catch(error){
@@ -88,7 +95,7 @@ const closeWindow = ()=>{
               <img src={add} alt={add} className="file-upload-icon"  />
                 <input  
                 hidden             
-                name="file"
+                name="images"
                 type="file"
                 id="file-upload"
                 onChange={(e)=>{setFieldValue(e.target.files[0])}}

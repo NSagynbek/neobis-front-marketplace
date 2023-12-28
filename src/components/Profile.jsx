@@ -14,6 +14,7 @@ import Exit from "../modalWindows/Exit";
 import ProfileDetails from "./ProfileDetails";
 import LikedProducts from "./LikedProducts"
 import { getMyItems,getLikedItems } from "../api";
+import { useSelector } from "react-redux";
 
 
 
@@ -25,9 +26,10 @@ function Profile(){
  const [userImage,setUserImage] = useState(null);
  const [selectedCategory, setSelectedCategory] = useState('profile');
  const [exit,setExit] = useState(false);
-
- 
-
+ const [favoriteProducts,setFavoriteProducts] = useState([]);
+ const [addedProducts,setAddedProducts] = useState([]);
+ const rerender = useSelector(state=> state.rerender);
+ const removeLikedProducts = useSelector(state => state.removeLikedProducts);
 
     useEffect(()=>{
        async function getUser  (){
@@ -41,41 +43,64 @@ function Profile(){
             console.log(error.response.status)
             console.log(error.message)
         }
-        
+
 
         }
 
          getUser()
     },[])
 
-     
+
+    useEffect(()=>{
+      const rerenderOnEdit = async()=>{
+        const response = await getMyItems()
+         setAddedProducts(response)
+      }
+
+      rerenderOnEdit();
+    },[rerender])
+
+
+    useEffect(()=>{
+      const rerenderOnDislike = async()=>{
+        const response = await getLikedItems()
+        setFavoriteProducts(response)
+      }
+
+      rerenderOnDislike();
+    },[removeLikedProducts])
+
+
 const getMyProducts = async ()=>{
   setSelectedCategory("myProducts")
   const response = await getMyItems()
+  setAddedProducts(response)
   console.log(response)
-  
+
 }
 
 const getMyLikedProducts = async ()=>{
   setSelectedCategory("lekedProducts")
   const response = await getLikedItems()
-  console.log(response)
+  setFavoriteProducts(response)
 }
 
 
-   
+
+
+
   const logOut = ()=>{
     setExit(!exit)
 }
-    
+
     return(
         <div className="profile-container">
-    
+
             <div className="profile-details">
                 <div className="user-info-container">
-                    <img 
-                    src={userImage?userImage:userImagePlaceholder} 
-                    alt={userImagePlaceholder} 
+                    <img
+                    src={userImage?userImage:userImagePlaceholder}
+                    alt={userImagePlaceholder}
                     onClick={()=>setSelectedCategory("profile")}
                     className="user-info-container__img"
                     />
@@ -87,26 +112,26 @@ const getMyLikedProducts = async ()=>{
                     onClick={()=>setSelectedCategory("profile")}
                     >{username}</p>
                     </div>
-                    
+
                 </div>
 
-                <div className="liked-products" 
+                <div className="liked-products"
                 onClick={getMyLikedProducts}
                 >
                     <img src={heart} alt={heart} className="liked-products__img" />
-                    <p className="profile-texts">Понравившиеся </p>         
+                    <p className="profile-texts">Понравившиеся </p>
                     <InputAdornment id="first-icon" className="profile-icons" position="start">
                     <IconButton edge="start"  >
                        <ArrowForwardIosIcon/>
                      </IconButton>
                      </InputAdornment>
-                     
+
                 </div>
                 <div className="products"
                 onClick={getMyProducts}
                 >
                     <img src={shop} alt={shop} className="products__img" />
-                    <p className="profile-texts">Мои товары</p>                   
+                    <p className="profile-texts">Мои товары</p>
                     <InputAdornment className="profile-icons" position="start">
                     <IconButton edge="end"  >
                        <ArrowForwardIosIcon/>
@@ -118,7 +143,7 @@ const getMyLikedProducts = async ()=>{
                 onClick={logOut}
                 >
                     <img src={Exitt} alt={Exitt} className="profile-exit__icon" />
-                    <NavLink 
+                    <NavLink
                     className="profile-exit__btn"
                     >Выйти</NavLink>
 
@@ -147,8 +172,8 @@ const getMyLikedProducts = async ()=>{
                    </NavLink>
                  </label>
 
-             
-            
+
+
               {selectedCategory === 'profile' && <p className='profile-header-text'>Профиль</p>}
               {selectedCategory === 'myProducts' && <p className='profile-header-text'>Мои товары</p>}
               {selectedCategory === 'lekedProducts' && <p className='profile-header-text'>Понравившиеся</p>}
@@ -156,19 +181,31 @@ const getMyLikedProducts = async ()=>{
             </div>
 
             <div className="my-products-container">
-              
 
-              {selectedCategory === 'profile' && <ProfileDetails/>}
-              {selectedCategory === 'myProducts' && <MyProducts/>}
-              {selectedCategory === 'lekedProducts' && <LikedProducts />}
+
+              {selectedCategory === 'profile'&& <ProfileDetails/>}
+
+              {selectedCategory === "myProducts" &&
+              addedProducts.map((products,index) => {
+              return <MyProducts key={index} products={products} />;
+              })
+               }
+
+             
+              {selectedCategory==="lekedProducts"&&
+              favoriteProducts.map((products,index)=>{
+                return <LikedProducts key={index} products={products}/>
+              })
+              }
+
                {exit?<Exit logOut={logOut} />:""}
             </div>
 
-      
+
 
             </div>
 
-            
+
 
         </div>
     )

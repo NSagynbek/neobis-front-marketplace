@@ -8,9 +8,10 @@ import AddProduct from "../modalWindows/AddProduct";
 import { getProfileDetails } from "../api";
 import { useEffect,useState } from "react";
 import { getProducts } from "../api";
+import {useSelector} from "react-redux";
 
-const notify = ()=>{
-    toast.success('Товар добавлен!', {
+const notify = (product)=>{
+    toast.success(`${product} Товар добавлен!`, {
         position: "top-center",
         autoClose: 5000,
         hideProgressBar: false,
@@ -27,18 +28,22 @@ const notify = ()=>{
 
 function MainPage (){
 
+const username = localStorage.getItem("username");    
 const [userDetails,setUserDetails] = useState({});
 const [closeWindow,setCloseWindow] = useState(false);
-console.log(userDetails)
+const [products,setProducts]=useState([]);
+const isDelete = useSelector(state => state.isDelete);
+
 
     useEffect(()=>{
         const getUserProfileDetails = async ()=>{
         try{
-        const userDetails = await getProfileDetails()
+        const userDetails = await getProfileDetails(username)
         setUserDetails({...userDetails})
 
-        const products = await getProducts()
-        console.log(products)
+        const response = await getProducts()
+        setProducts(response)
+        
         
          }catch(error){
           console.log(error)
@@ -46,19 +51,19 @@ console.log(userDetails)
             
      }
        getUserProfileDetails()
-    },[])
+    },[isDelete])
 
     const handleClick = ()=>{
         setCloseWindow(!closeWindow)
     }
 
-    // notify()
-
     
+
+   
 
     return (
         <div className="main-page-container">
-            {closeWindow?<AddProduct handleClick={handleClick}/>:""}
+            {closeWindow?<AddProduct handleClick={handleClick} notify={notify}/>:""}
 
             <header className="main-header">
                 <div className="main-header__image-container">
@@ -93,7 +98,9 @@ console.log(userDetails)
             </header>
 
             <div className="content-container">
-           //content here              
+              {products.map((products,index)=>{
+                return <MyProducts key={index} products={products}/>
+              })}             
 
             </div>
             <ToastContainer/>

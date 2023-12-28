@@ -1,49 +1,64 @@
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import {IconButton,InputAdornment} from '@mui/material';
 import cardImage from "../assets/cardImage.png"
-import EditDelete from '../modalWindows/EditDelete';
 import { useState,useEffect } from 'react';
-import productDetailsView from "../modalWindows/ProductDetailsView"
+import ProductDetaisView from '../modalWindows/ProductDetailsView';
+import { like } from '../api';
+import { useDispatch } from 'react-redux';
+import { toggleRemoveLikedProducts } from '../redux';
 
-
-
-function LikedProducts(){
+function LikedProducts({key,products}){
 
   const [view,setView] = useState(false);
+  const [disike, setDislike] = useState(false)
+  
+  const dispatch = useDispatch();
 
-
-const handleClick = ()=>{
-  setView(!view)
-}
-
+  const handleClick = async ()=>{
+    setView((prev)=>!prev)
+  }
+ 
+ 
+  const handleDislike = async()=>{
+    setDislike((prev)=>!prev);
+    const res = await like(products.id)
+    dispatch(toggleRemoveLikedProducts());
+  }
 
     return (
-          <div className='my-product'
-          onClick={handleClick}
-          >
+          <div key={key} className='my-product'>
           
             <div className='my-product__image-container'>
-                <img className='my-product__image' src={cardImage} alt={cardImage} />
+                <img 
+                className='my-product__image' 
+                src={cardImage} 
+                alt={cardImage} 
+                onClick={handleClick}
+                />
             </div>
 
             <div className='my-product__text-container'>
-            <p className='my-product__title'>BMW M4 Coupe: A Two-Door</p>
-            <p className='my-product__price'>23 000 $</p>
+            <p className='my-product__title'>{products.name}</p>
+            <p className='my-product__price'>{products.price}$</p>
             </div>
 
             <div className='my-product__icons-container'>
-            <InputAdornment id="heart-icon"  position="start">
+            <InputAdornment 
+            id="heart-icon"  
+            position="start"
+            onClick={handleDislike}
+            >
               <IconButton edge="start"  >
-                <FavoriteIcon/>
-              </IconButton>
+                <FavoriteIcon style={{color:disike?"":"red"}}/>
+              </IconButton >
             </InputAdornment>
-                <p className='my-product__likes'>100</p>
+                <p className='my-product__likes'>{products.likes}</p>
 
           
-                {view?<productDetailsView/>:""}
+               
             </div>
-
-      
+            {view?<ProductDetaisView handleClick={handleClick} products={products}/>:""}
+            
         </div>
     )
 }

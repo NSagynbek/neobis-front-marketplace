@@ -2,10 +2,10 @@ import axios from 'axios';
   import { getAccessToken, setAccessToken, getRefreshToken, setRefreshToken,getUserName } from './tokenService';
 
 
-  const instance = axios.create({
+  const muliPartinstance = axios.create({
     baseURL: 'https://mobi-market-production.up.railway.app/',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'multipart/form-data', 
     },
   });
 
@@ -13,7 +13,7 @@ import axios from 'axios';
 
 
 
-   instance.interceptors.request.use(
+  muliPartinstance.interceptors.request.use(
      async (config) => {
        const excludedEndpoints = ["api/v1/auth/login", "api/v1/users/refreshToken"];
        if(!excludedEndpoints.some(endpoint=>config.url.endsWith(endpoint))){
@@ -33,7 +33,7 @@ import axios from 'axios';
 
   let retryCounter = 0;
 
- instance.interceptors.response.use(
+  muliPartinstance.interceptors.response.use(
    (response) => {
      return response;
    },
@@ -52,13 +52,13 @@ import axios from 'axios';
        };
 
        try {
-         const response = await instance.post("api/v1/users/refreshToken",formData);
+         const response = await muliPartinstance.post("api/v1/users/refreshToken",formData);
          setAccessToken(response.data.accessToken);
          setRefreshToken(response.data.refreshToken);
 
          originalRequest.headers.Authorization = `Bearer ${response.data.accessToken}`;
          retryCounter = 0; 
-         return instance(originalRequest);
+         return muliPartinstance(originalRequest);
        } catch (refreshError) {
        
          console.error('Error refreshing token:', refreshError);
@@ -72,4 +72,4 @@ import axios from 'axios';
  );
 
 
-export default instance;
+export default muliPartinstance;

@@ -1,11 +1,24 @@
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { IconButton } from '@mui/material';
 import { deleteMyProduct } from '../api';
+import { useDispatch } from 'react-redux';
+import { toggleIsDelete } from '../redux';
 
-function Delete({handleDelete}) {
+function Delete({handleDelete,products}) {
 
-  const handleDeleteClick = async (id) => {
-    //const response = await deleteMyProduct(id)
+  const dispatch = useDispatch();
+
+  const handleDeleteClick = async () => {
+    try{
+      const response = await deleteMyProduct(products.id)
+      handleDelete()
+      dispatch(toggleIsDelete());
+    }catch(error){
+      console.log(error)
+      alert("Вы не можете удалять товары других пользователей")
+    }
+    
+
   };
 
   const handleCancel = ()=>{
@@ -25,7 +38,7 @@ function Delete({handleDelete}) {
            />
         </IconButton>
 
-        <p className='delete-card__text'>Вы действительно хотите удалить данный товар?</p>
+        <p className='delete-card__text'>Вы действительно хотите удалить {products.name}?</p>
         <button className='delete-card__delete' onClick={handleDeleteClick}>удалить</button>
         <button onClick={handleCancel} className='delete-card__cancel'>Отмена</button>
       </div>

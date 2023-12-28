@@ -19,7 +19,7 @@ const initialValues = {
 
 
 function ProfileDetails (){
-
+  
   const [number,setNumber] = useState(false);
   const [editMode, setEditMode] = useState(false)
   const smsCode = useSelector(state => state.smsCode)
@@ -27,11 +27,13 @@ function ProfileDetails (){
   const [fieldValue, setFieldValue] = useState(null)
   const [userImage,setUserImage] = useState(null);
   const [userMobile, setUserMobile] = useState("");
+  const username = localStorage.getItem("username"); 
 
   useEffect(()=>{
+   
     const getUserProfileDetails = async ()=>{
     try{
-    const res = await getProfileDetails()
+    const res = await getProfileDetails(username)
      setFormValues({
       firstname: res.firstname || '',
       lastname: res.lastname || '',

@@ -5,7 +5,9 @@ import {
   TOGGLE_SMS,
   USERNAME_PASSWORD,
   REFRESH_TOKEN,
-  LIKE,
+  DELETE_RERENDER,
+  RERENDER_REQUIRED,
+  RERENDER_REMOVE_LIKED_PRODUCTS,
 } from "./actionTypes";
 
 const initialState = {
@@ -17,7 +19,9 @@ const initialState = {
     email:"",
   },
   username:"",
-  isLiked:false,
+  isDelete:false,
+  rerender:false,
+  removeLikedProducts:false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -64,11 +68,24 @@ const reducer = (state = initialState, action) => {
           username:action.payload
         }  
 
-      case LIKE:
+
+      case DELETE_RERENDER:
         return {
           ...state,
-          isLiked:!state.isLiked
+          isDelete:!state.isDelete
         }
+
+      case RERENDER_REQUIRED:
+        return {
+          ...state,
+          rerender:!state.rerender
+        }
+
+        case RERENDER_REMOVE_LIKED_PRODUCTS:
+          return {
+            ...state,
+            removeLikedProducts:!state.removeLikedProducts
+          }
 
       
     default:
