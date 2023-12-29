@@ -1,32 +1,15 @@
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import {IconButton,InputAdornment} from '@mui/material';
-import cardImage from "../assets/cardImage.png"
 import EditDelete from '../modalWindows/EditDelete';
 import { useEffect,useState } from 'react';
 import { like } from '../api';
 
-
 function MyProducts({key,products}){
-
-  const image = products.images.map((el)=>{
-    if(el.imageUrl){
-      return el.imageUrl
-    } else{
-      return ""
-    }
-  })
-console.log(image)
-console.log(products)
-
   const [more,setMore] = useState(false);
   const [isLiked,setIsLiked] = useState(false);
-
-  useEffect(()=>{
-   setIsLiked(products.likes>0)
   
-  },[products.likes])
-
+const image = products.images.map((el) => (el.imageUrl ? el.imageUrl : ''));
 
 const likeProduct = async (id)=>{
 
@@ -45,15 +28,17 @@ const handleClick = ()=>{
 }
 
 
-
 return (
           <div key={key} className='my-product'>
           
             <div className='my-product__image-container'>
+             
                 <img 
                 className='my-product__image' 
-                src={image[0]?image[0]:""} 
-                alt={image[0]} />
+                src={image[0]} 
+                alt={image[0]} 
+                />
+              
             </div>
 
             <div className='my-product__text-container'>

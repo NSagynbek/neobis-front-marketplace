@@ -7,9 +7,6 @@ import { useSelector} from "react-redux"
 import { getProfileDetails,updateProfileDetails,updateProfileImage } from "../api";
 
 
-
-
-
 const initialValues = {
   firstname:"",
   lastname:"",
@@ -42,7 +39,7 @@ function ProfileDetails (){
     });
     setUserImage(res.imageUrl)
     setUserMobile(res.phoneNumber)
-      console.log(res)
+      
      }catch(error){
       console.log(error)
      }

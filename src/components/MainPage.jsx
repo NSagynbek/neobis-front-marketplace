@@ -40,11 +40,10 @@ const isDelete = useSelector(state => state.isDelete);
         try{
         const userDetails = await getProfileDetails(username)
         setUserDetails({...userDetails})
-
+        
         const response = await getProducts()
         setProducts(response)
-        
-        
+              
          }catch(error){
           console.log(error)
          }
@@ -57,9 +56,8 @@ const isDelete = useSelector(state => state.isDelete);
         setCloseWindow(!closeWindow)
     }
 
-    
 
-   
+
 
     return (
         <div className="main-page-container">

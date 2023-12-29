@@ -11,7 +11,7 @@ function LikedProducts({key,products}){
   console.log(products)
 
   const [view,setView] = useState(false);
-  const [disike, setDislike] = useState(false)
+  const [disLike, setDislike] = useState(false)
   
   const dispatch = useDispatch();
 
@@ -50,7 +50,7 @@ function LikedProducts({key,products}){
             onClick={handleDislike}
             >
               <IconButton edge="start"  >
-                <FavoriteIcon style={{color:disike?"":"red"}}/>
+                <FavoriteIcon style={{color:disLike?"":"red"}}/>
               </IconButton >
             </InputAdornment>
                 <p className='my-product__likes'>{products.likes}</p>
