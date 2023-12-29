@@ -32,7 +32,7 @@ function LikedProducts({key,products}){
             <div className='my-product__image-container'>
                 <img 
                 className='my-product__image' 
-                src={cardImage} 
+                src={products.images[0].imageUrl} 
                 alt={cardImage} 
                 onClick={handleClick}
                 />
