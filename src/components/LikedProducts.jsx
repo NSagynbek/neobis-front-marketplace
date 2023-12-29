@@ -8,6 +8,7 @@ import { useDispatch } from 'react-redux';
 import { toggleRemoveLikedProducts } from '../redux';
 
 function LikedProducts({key,products}){
+  console.log(products)
 
   const [view,setView] = useState(false);
   const [disike, setDislike] = useState(false)

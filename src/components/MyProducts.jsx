@@ -52,7 +52,7 @@ return (
             <div className='my-product__image-container'>
                 <img 
                 className='my-product__image' 
-                src={image[0]?image[0]:cardImage} 
+                src={image[0]?image[0]:""} 
                 alt={image[0]} />
             </div>
 

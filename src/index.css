@@ -713,9 +713,11 @@ margin: 0;
 .my-product__text-container{
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   gap: 1px;
   padding: 2px  0px 2px 5px;
   width: 100%;
+  height: 60px;
 }
 
 .edit-delete-card{

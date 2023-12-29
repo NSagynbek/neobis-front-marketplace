@@ -6,7 +6,6 @@ import userImagePlaceholder from "../assets/userImagePlaceholder.png"
 import heart from "../assets/heart.png"
 import shop from "../assets/shop.png"
 import Exitt from "../assets/exit.png"
-import Codemodal from "../modalWindows/Codemodal";
 import {useEffect, useState} from "react";
 import {getProfileDetails} from "../api";
 import MyProducts from "./MyProducts";
@@ -30,11 +29,12 @@ function Profile(){
  const [addedProducts,setAddedProducts] = useState([]);
  const rerender = useSelector(state=> state.rerender);
  const removeLikedProducts = useSelector(state => state.removeLikedProducts);
-
+const userN = localStorage.getItem("username")
     useEffect(()=>{
        async function getUser  (){
         try{
-            const response = await getProfileDetails();
+            const response = await getProfileDetails(userN);
+            console.log("from Profile",response)
             setUsername(response.username)
             setName(response.firstname)
             setUserImage(response.imageUrl)
@@ -99,7 +99,7 @@ const getMyLikedProducts = async ()=>{
             <div className="profile-details">
                 <div className="user-info-container">
                     <img
-                    src={userImage?userImage:userImagePlaceholder}
+                    src={userImage}
                     alt={userImagePlaceholder}
                     onClick={()=>setSelectedCategory("profile")}
                     className="user-info-container__img"

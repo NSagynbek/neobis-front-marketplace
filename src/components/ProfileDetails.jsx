@@ -84,7 +84,7 @@ async function handleChange (event){
 useEffect(()=>{
   const updateImage = async ()=>{
     const formData = new FormData()
-    formData.append("multipartFile", fieldValue)
+    formData.append("multipartFile",fieldValue)
     const res = await updateProfileImage(formData)
     console.log(res)
   }
