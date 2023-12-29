@@ -99,7 +99,7 @@ const getMyLikedProducts = async ()=>{
             <div className="profile-details">
                 <div className="user-info-container">
                     <img
-                    src={userImage}
+                    src={userImage || userImagePlaceholder}
                     alt={userImagePlaceholder}
                     onClick={()=>setSelectedCategory("profile")}
                     className="user-info-container__img"

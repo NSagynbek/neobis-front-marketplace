@@ -85,7 +85,7 @@ const isDelete = useSelector(state => state.isDelete);
                     <div className="main-user__image">
                         <NavLink to="/profile" className="main-header__link">
                         <img 
-                        src={userDetails?userDetails.imageUrl:userImagePlaceholder} 
+                        src={userDetails && userDetails.imageUrl ? userDetails.imageUrl : userImagePlaceholder} 
                         alt={userImagePlaceholder}
                         className="user-info-container__img"
                          />

@@ -90,6 +90,9 @@ useEffect(()=>{
 },[fieldValue])
 
 
+
+
+
 return(
  <div>
   {number?<Mobilemodal handleClick={handleClick}/>:""} 
@@ -98,7 +101,7 @@ return(
   <div className="avatar">
    <label htmlFor="avatar" className="avatar-label">
     <img
-      src={fieldValue?URL.createObjectURL(fieldValue):userImage}
+      src={fieldValue ? URL.createObjectURL(fieldValue) : (userImage || avatar)}
       alt={avatar}
       className="avatar__img"
      />
