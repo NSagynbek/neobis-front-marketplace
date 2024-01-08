@@ -23,8 +23,7 @@ To run the project locally:
 
 Clone this repository.  
 Install dependencies using npm install.  
-Start the development server with npm run dev.  
-Access the application at http://localhost:3000.  
+Start the development server with npm run dev.    
 Usage  
 Upon starting the application, users can:  
 
